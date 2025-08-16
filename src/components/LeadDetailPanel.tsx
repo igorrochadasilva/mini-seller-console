@@ -1,21 +1,28 @@
 import React, { useState, useCallback } from 'react';
-import { FormProvider } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { Lead, LeadDetailPanelProps, Opportunity } from '@/types';
 import { useLeadsStore } from '@/stores/leadsStore';
 import { Button } from './ui/button';
 import { X, Save, Zap } from 'lucide-react';
+import { leadUpdateSchema, LeadUpdateFormData } from '@/schemas/leads';
 import LeadInformation from './LeadDetailPanel/LeadInformation';
 import EditFields from './LeadDetailPanel/EditFields';
 import ConvertToOpportunityModal from './ConvertToOpportunityModal';
 import { TypographyH2 } from './ui/typograph';
-import { useLeadForm } from '@/hooks/useLeadForm';
 
 const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave, onConvertToOpportunity }) => {
   const { updateLead } = useLeadsStore();
   const [showConvertModal, setShowConvertModal] = useState(false);
   
-  const methods = useLeadForm(lead);
+  const methods = useForm<LeadUpdateFormData>({
+    resolver: zodResolver(leadUpdateSchema),
+    defaultValues: {
+      email: lead.email,
+      status: lead.status,
+    },
+  });
 
   const { handleSubmit, formState: { isSubmitting } } = methods;
 

@@ -1,19 +1,23 @@
 import { useMemo } from 'react';
 import { useLeadsStore } from '@/stores/leadsStore';
-import { LeadStatus, ScoreSortDirection, UseLeadsFilters } from '@/types';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useFiltersStore } from '@/stores/filtersStore';
+import { ScoreSortDirection } from '@/types/enums';
 
 // ============================================================================
-// OPTIMIZED LEADS FILTERS HOOK WITH LOCAL STORAGE
+// OPTIMIZED LEADS FILTERS HOOK WITH ZUSTAND PERSIST
 // ============================================================================
 
-export const useLeadsFilters = (): UseLeadsFilters => {
+export const useLeadsFilters = () => {
   const { leads } = useLeadsStore();
-
-  // Filter state with localStorage persistence
-  const [searchTerm, setSearchTerm] = useLocalStorage<string>('leads-search-term', '');
-  const [statusFilter, setStatusFilter] = useLocalStorage<LeadStatus | 'all'>('leads-status-filter', 'all');
-  const [scoreSortDirection, setScoreSortDirection] = useLocalStorage<ScoreSortDirection>('leads-score-sort', ScoreSortDirection.DESC);
+  const {
+    searchTerm,
+    statusFilter,
+    scoreSortDirection,
+    setSearchTerm,
+    setStatusFilter,
+    toggleScoreSort,
+    resetFilters,
+  } = useFiltersStore();
 
   // Computed filtered leads - optimized with single pass filtering
   const filteredLeads = useMemo(() => {
@@ -45,19 +49,6 @@ export const useLeadsFilters = (): UseLeadsFilters => {
         : b.score - a.score;
     });
   }, [leads, searchTerm, statusFilter, scoreSortDirection]);
-
-  // Simplified actions - no need for useCallback here
-  const toggleScoreSort = () => {
-    setScoreSortDirection(prev => 
-      prev === ScoreSortDirection.ASC ? ScoreSortDirection.DESC : ScoreSortDirection.ASC
-    );
-  };
-
-  const resetFilters = () => {
-    setSearchTerm('');
-    setStatusFilter('all');
-    setScoreSortDirection(ScoreSortDirection.DESC);
-  };
 
   return {
     // State
