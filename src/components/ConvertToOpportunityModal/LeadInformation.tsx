@@ -1,7 +1,7 @@
 import React from 'react';
-import { Lead } from '@/types';
-import { User, Building, TrendingUp } from 'lucide-react';
+
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
+import { Lead } from '@/types';
 
 interface LeadInformationProps {
   lead: Lead;
@@ -37,4 +37,4 @@ const LeadInformation: React.FC<LeadInformationProps> = ({ lead }) => {
   );
 };
 
-export default LeadInformation;
+export { LeadInformation };

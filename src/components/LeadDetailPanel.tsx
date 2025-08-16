@@ -1,15 +1,17 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { X, Save, Zap } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Lead, LeadDetailPanelProps, Opportunity } from '@/types';
-import { useLeadsStore } from '@/stores/leadsStore';
-import { Button } from './ui/button';
-import { X, Save, Zap } from 'lucide-react';
+
 import { leadUpdateSchema, LeadUpdateFormData } from '@/schemas/leads';
-import LeadInformation from './LeadDetailPanel/LeadInformation';
-import EditFields from './LeadDetailPanel/EditFields';
-import ConvertToOpportunityModal from './ConvertToOpportunityModal';
+import { useLeadsStore } from '@/stores/leadsStore';
+import { LeadDetailPanelProps, Opportunity } from '@/types';
+
+import { ConvertToOpportunityModal } from './ConvertToOpportunityModal';
+import { EditFields } from './LeadDetailPanel/EditFields';
+import { LeadInformation } from './LeadDetailPanel/LeadInformation';
+import { Button } from './ui/button';
 import { TypographyH2 } from './ui/typograph';
 
 const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({
@@ -34,7 +36,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: LeadUpdateFormData) => {
     try {
       // Update lead in Zustand store
       updateLead(lead.id, {
@@ -155,4 +157,4 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({
   );
 };
 
-export default LeadDetailPanel;
+export { LeadDetailPanel };

@@ -1,9 +1,10 @@
+import { Edit, Trash2 } from 'lucide-react';
 import React from 'react';
+
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
-import { Button } from '@/components/ui/button';
 import { Opportunity, OpportunityStage } from '@/types';
-import { Edit, Trash2 } from 'lucide-react';
 
 interface OpportunityCardProps {
   opportunity: Opportunity;
@@ -103,4 +104,4 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({
   );
 };
 
-export default OpportunityCard;
+export { OpportunityCard };

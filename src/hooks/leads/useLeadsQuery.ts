@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
+
 import { getLeads } from '@/services/leads/getLeads';
 import { useLeadsStore } from '@/stores/leadsStore';
 import { UseLeadsQueryResult } from '@/types';
-import { toast } from 'sonner';
 
 export const useLeadsQuery = (): UseLeadsQueryResult => {
   const { setLeads } = useLeadsStore();

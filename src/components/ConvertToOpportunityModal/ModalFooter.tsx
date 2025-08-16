@@ -1,6 +1,7 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Save } from 'lucide-react';
+import React from 'react';
+
+import { Button } from '@/components/ui/button';
 
 interface ModalFooterProps {
   isSubmitting: boolean;
@@ -33,4 +34,4 @@ const ModalFooter: React.FC<ModalFooterProps> = ({
   );
 };
 
-export default ModalFooter;
+export { ModalFooter };

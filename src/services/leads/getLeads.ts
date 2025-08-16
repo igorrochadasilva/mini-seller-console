@@ -1,5 +1,5 @@
-import { Lead, LeadStatus } from '@/types';
 import leadsData from '@/leads.json';
+import { Lead, LeadStatus } from '@/types';
 
 export const getLeads = async (): Promise<Lead[]> => {
   // Simular delay de rede para experiência realista

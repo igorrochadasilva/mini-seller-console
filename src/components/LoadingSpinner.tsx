@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { LoadingSpinnerProps } from '@/types';
 import { SpinnerSize } from '@/types/enums';
+
 import { TypographyP } from './ui/typograph';
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
@@ -32,4 +34,4 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   );
 };
 
-export default LoadingSpinner;
+export { LoadingSpinner };

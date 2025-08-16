@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { LeadStatus } from '@/types/enums';
 
 export const leadUpdateSchema = z.object({

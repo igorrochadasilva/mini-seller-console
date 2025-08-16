@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { useLeadsStore } from '@/stores/leadsStore';
+
 import { useFiltersStore } from '@/stores/filtersStore';
+import { useLeadsStore } from '@/stores/leadsStore';
 import { ScoreSortDirection } from '@/types/enums';
 
 // ============================================================================

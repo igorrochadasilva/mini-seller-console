@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
+
 import { useLeadsFilters } from '@/hooks/leads/useLeadsFilters';
-import LeadDetailPanel from './LeadDetailPanel';
-import LoadingSpinner from './LoadingSpinner';
-import EmptyState from './EmptyState';
-import LeadsFilters from './LeadsFilters';
-import LeadsResultsCount from './LeadsResultsCount';
-import LeadCard from './LeadsList/LeadCard';
-import LeadsTable from './LeadsList/LeadsTable';
+import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
 import { Lead, LeadsListProps } from '@/types';
 import { SpinnerSize } from '@/types/enums';
-import { Opportunity } from '@/types';
+
+import { EmptyState } from './EmptyState';
+import { LeadDetailPanel } from './LeadDetailPanel';
+import { LeadsFilters } from './LeadsFilters';
+import { LeadCard } from './LeadsList/LeadCard';
+import { LeadsTable } from './LeadsList/LeadsTable';
+import { LeadsResultsCount } from './LeadsResultsCount';
+import { LoadingSpinner } from './LoadingSpinner';
 
 const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   const { isLoading, error } = useLeadsQuery();
@@ -30,12 +31,11 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
     setSelectedLead(lead);
   };
 
-  const handleSave = (updatedLead: Lead) => {
+  const handleSave = () => {
     setSelectedLead(null);
   };
 
-  const handleConvertToOpportunity = (opportunity: Opportunity) => {
-    console.log('Lead converted to opportunity:', opportunity);
+  const handleConvertToOpportunity = () => {
     setSelectedLead(null);
   };
 
@@ -107,4 +107,4 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   );
 };
 
-export default LeadsList;
+export { LeadsList };

@@ -1,8 +1,9 @@
-import React from 'react';
-import { Lead } from '@/types';
-import { Label } from '@/components/ui/label';
 import { User, Building, TrendingUp } from 'lucide-react';
+import React from 'react';
+
+import { Label } from '@/components/ui/label';
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
+import { Lead } from '@/types';
 
 interface LeadInformationProps {
   lead: Lead;
@@ -58,4 +59,4 @@ const LeadInformation: React.FC<LeadInformationProps> = ({ lead }) => {
   );
 };
 
-export default LeadInformation;
+export { LeadInformation };

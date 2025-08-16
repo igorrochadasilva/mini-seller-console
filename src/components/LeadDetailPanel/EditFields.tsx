@@ -1,6 +1,7 @@
+import { Mail, TrendingUp, AlertCircle } from 'lucide-react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { LeadUpdateFormData } from '@/schemas/leads';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,9 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Mail, TrendingUp, AlertCircle } from 'lucide-react';
-import { LeadStatus } from '@/types/enums';
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
+import { LeadUpdateFormData } from '@/schemas/leads';
+import { LeadStatus } from '@/types/enums';
 
 const EditFields: React.FC = () => {
   const {
@@ -113,4 +114,4 @@ const EditFields: React.FC = () => {
   );
 };
 
-export default EditFields;
+export { EditFields };

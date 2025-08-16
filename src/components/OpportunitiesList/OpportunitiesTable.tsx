@@ -1,4 +1,7 @@
+import { Edit, Trash2 } from 'lucide-react';
 import React from 'react';
+
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableHeader,
@@ -7,9 +10,7 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { Opportunity, OpportunityStage } from '@/types';
-import { Edit, Trash2 } from 'lucide-react';
 
 interface OpportunitiesTableProps {
   opportunities: Opportunity[];
@@ -123,4 +124,4 @@ const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({
   );
 };
 
-export default OpportunitiesTable;
+export { OpportunitiesTable };

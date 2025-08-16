@@ -1,15 +1,14 @@
-import React from 'react';
-import { Opportunity } from '@/types';
-import { Button } from '@/components/ui/button';
 import { X, Save } from 'lucide-react';
+import React from 'react';
+
+import { Button } from '@/components/ui/button';
 import { TypographyH2, TypographyP } from '@/components/ui/typograph';
 
 interface ModalHeaderProps {
-  opportunity: Opportunity;
   onClose: () => void;
 }
 
-const ModalHeader: React.FC<ModalHeaderProps> = ({ opportunity, onClose }) => {
+const ModalHeader: React.FC<ModalHeaderProps> = ({ onClose }) => {
   return (
     <div className="flex items-center justify-between p-6 bg-gray-800/50 rounded-t-xl">
       <div className="flex items-center gap-3">
@@ -37,4 +36,4 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ opportunity, onClose }) => {
   );
 };
 
-export default ModalHeader;
+export { ModalHeader };

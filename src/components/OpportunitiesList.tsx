@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Opportunity } from '@/types';
-import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
 import { toast } from 'sonner';
-import EmptyState from './EmptyState';
-import EditOpportunityModal from './EditOpportunityModal';
+
+import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
+import { Opportunity } from '@/types';
+
+import { EditOpportunityModal } from './EditOpportunityModal';
+import { EmptyState } from './EmptyState';
+import { OpportunitiesTable } from './OpportunitiesList/OpportunitiesTable';
+import { OpportunityCard } from './OpportunitiesList/OpportunityCard';
 import { TypographyH2, TypographyP } from './ui/typograph';
-import OpportunityCard from './OpportunitiesList/OpportunityCard';
-import OpportunitiesTable from './OpportunitiesList/OpportunitiesTable';
 
 // ============================================================================
 // OPPORTUNITIES LIST COMPONENT
@@ -99,4 +101,4 @@ const OpportunitiesList: React.FC = () => {
   );
 };
 
-export default OpportunitiesList;
+export { OpportunitiesList };

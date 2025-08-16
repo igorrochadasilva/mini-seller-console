@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { EmptyStateProps } from '@/types';
+
 import { TypographyH3, TypographyP } from './ui/typograph';
 
 const EmptyState: React.FC<EmptyStateProps> = ({ title, message }) => {
@@ -31,4 +33,4 @@ const EmptyState: React.FC<EmptyStateProps> = ({ title, message }) => {
   );
 };
 
-export default EmptyState;
+export { EmptyState };

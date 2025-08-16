@@ -1,8 +1,9 @@
-import React from 'react';
-import { Lead } from '@/types';
-import { Button } from '@/components/ui/button';
 import { X, Zap } from 'lucide-react';
+import React from 'react';
+
+import { Button } from '@/components/ui/button';
 import { TypographyH2, TypographyP } from '@/components/ui/typograph';
+import { Lead } from '@/types';
 
 interface ModalHeaderProps {
   lead: Lead;
@@ -37,4 +38,4 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ lead, onClose }) => {
   );
 };
 
-export default ModalHeader;
+export { ModalHeader };

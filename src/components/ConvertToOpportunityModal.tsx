@@ -1,19 +1,21 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Lead, Opportunity } from '@/types';
-import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
+
+import { generateOpportunityId } from '@/lib/leadUtils';
 import {
   opportunityCreateSchema,
   OpportunityCreateFormData,
 } from '@/schemas/opportunities';
+import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
+import { Lead, Opportunity } from '@/types';
 import { OpportunityStage } from '@/types/enums';
-import { generateOpportunityId } from '@/lib/leadUtils';
-import ModalHeader from './ConvertToOpportunityModal/ModalHeader';
-import LeadInformation from './ConvertToOpportunityModal/LeadInformation';
-import OpportunityForm from './ConvertToOpportunityModal/OpportunityForm';
-import ModalFooter from './ConvertToOpportunityModal/ModalFooter';
+
+import { LeadInformation } from './ConvertToOpportunityModal/LeadInformation';
+import { ModalFooter } from './ConvertToOpportunityModal/ModalFooter';
+import { ModalHeader } from './ConvertToOpportunityModal/ModalHeader';
+import { OpportunityForm } from './ConvertToOpportunityModal/OpportunityForm';
 
 // ============================================================================
 // CONVERT TO OPPORTUNITY MODAL PROPS
@@ -117,4 +119,4 @@ const ConvertToOpportunityModal: React.FC<ConvertToOpportunityModalProps> = ({
   );
 };
 
-export default ConvertToOpportunityModal;
+export { ConvertToOpportunityModal };

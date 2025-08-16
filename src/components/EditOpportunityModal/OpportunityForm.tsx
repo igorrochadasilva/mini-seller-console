@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { OpportunityUpdateFormData } from '@/schemas/opportunities';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,8 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { OpportunityStage } from '@/types/enums';
 import { TypographyP } from '@/components/ui/typograph';
+import { OpportunityUpdateFormData } from '@/schemas/opportunities';
+import { OpportunityStage } from '@/types/enums';
 
 const OpportunityForm: React.FC = () => {
   const {
@@ -149,4 +150,4 @@ const OpportunityForm: React.FC = () => {
   );
 };
 
-export default OpportunityForm;
+export { OpportunityForm };

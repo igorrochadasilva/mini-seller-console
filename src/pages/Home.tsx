@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { TypographyH1, Button, Container } from '@/components/ui';
-import LeadsList from '@/components/LeadsList';
-import OpportunitiesList from '@/components/OpportunitiesList';
 import { Users, TrendingUp } from 'lucide-react';
+import React, { useState } from 'react';
 
-function Home() {
+import { LeadsList } from '@/components/LeadsList';
+import { OpportunitiesList } from '@/components/OpportunitiesList';
+import { TypographyH1, Button, Container } from '@/components/ui';
+
+export const Home = () => {
   const [activeTab, setActiveTab] = useState<'leads' | 'opportunities'>(
     'leads'
   );
@@ -60,6 +61,4 @@ function Home() {
       </Container>
     </div>
   );
-}
-
-export default Home;
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Table,
   TableHeader,
@@ -7,9 +8,9 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table';
-import { Lead } from '@/types';
-import { getScoreColor, getStatusColor } from '@/lib/leadUtils';
 import { COMMON_STYLES } from '@/lib/constants';
+import { getScoreColor, getStatusColor } from '@/lib/leadUtils';
+import { Lead } from '@/types';
 
 interface LeadsTableProps {
   leads: Lead[];
@@ -85,4 +86,4 @@ const LeadsTable: React.FC<LeadsTableProps> = ({ leads, onRowClick }) => {
   );
 };
 
-export default LeadsTable;
+export { LeadsTable };

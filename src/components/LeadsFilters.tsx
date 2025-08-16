@@ -1,4 +1,10 @@
+import { Search, Filter, TrendingUp, TrendingDown } from 'lucide-react';
 import React from 'react';
+
+import { LeadsFiltersProps } from '@/types';
+import { LeadStatus, ScoreSortDirection } from '@/types/enums';
+
+import { Button } from './ui/button';
 import { Input } from './ui/input';
 import {
   Select,
@@ -7,10 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { Button } from './ui/button';
-import { Search, Filter, TrendingUp, TrendingDown } from 'lucide-react';
-import { LeadsFiltersProps } from '@/types';
-import { LeadStatus, ScoreSortDirection } from '@/types/enums';
 
 const LeadsFilters: React.FC<LeadsFiltersProps> = ({
   searchTerm,
@@ -91,4 +93,4 @@ const LeadsFilters: React.FC<LeadsFiltersProps> = ({
   );
 };
 
-export default LeadsFilters;
+export { LeadsFilters };

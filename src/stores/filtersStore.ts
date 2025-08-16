@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
 import { LeadStatus, ScoreSortDirection } from '@/types/enums';
 
 interface FiltersState {
@@ -18,7 +19,7 @@ interface FiltersState {
 
 export const useFiltersStore = create<FiltersState>()(
   persist(
-    (set, get) => ({
+    set => ({
       // Initial state
       searchTerm: '',
       statusFilter: 'all',
@@ -50,10 +51,10 @@ export const useFiltersStore = create<FiltersState>()(
     }),
     {
       name: 'leads-filters-storage',
-      partialize: state => ({
-        searchTerm: state.searchTerm,
-        statusFilter: state.statusFilter,
-        scoreSortDirection: state.scoreSortDirection,
+      partialize: _state => ({
+        searchTerm: _state.searchTerm,
+        statusFilter: _state.statusFilter,
+        scoreSortDirection: _state.scoreSortDirection,
       }),
     }
   )

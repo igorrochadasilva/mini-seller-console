@@ -1,6 +1,8 @@
 import React from 'react';
-import { TypographyP } from './ui/typograph';
+
 import { LeadStatus } from '@/types/enums';
+
+import { TypographyP } from './ui/typograph';
 
 interface LeadsResultsCountProps {
   count: number;
@@ -34,4 +36,4 @@ const LeadsResultsCount: React.FC<LeadsResultsCountProps> = ({
   );
 };
 
-export default LeadsResultsCount;
+export { LeadsResultsCount };

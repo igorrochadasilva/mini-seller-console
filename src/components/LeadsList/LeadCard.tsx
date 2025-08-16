@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
-import { Lead } from '@/types';
-import { getScoreColor, getStatusColor } from '@/lib/leadUtils';
 import { COMMON_STYLES } from '@/lib/constants';
+import { getScoreColor, getStatusColor } from '@/lib/leadUtils';
+import { Lead } from '@/types';
 
 interface LeadCardProps {
   lead: Lead;
@@ -59,4 +60,4 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
   );
 };
 
-export default LeadCard;
+export { LeadCard };

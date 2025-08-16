@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { Lead, LeadsStoreState, LeadUpdateData } from '@/types';
 
 export const useLeadsStore = create<LeadsStoreState>()(set => ({
