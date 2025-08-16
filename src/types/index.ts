@@ -6,6 +6,7 @@
 // Lead types
 export type {
   Lead,
+  Opportunity,
 } from './leads';
 
 // API types

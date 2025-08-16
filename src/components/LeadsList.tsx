@@ -32,6 +32,13 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
     setSelectedLead(null);
   };
 
+  const handleConvertToOpportunity = (lead: Lead) => {
+    // TODO: Implement opportunity conversion logic
+    console.log('Converting lead to opportunity:', lead);
+    // For now, just close the panel
+    setSelectedLead(null);
+  };
+
   if (isLoading) return <LoadingSpinner message="Loading leads..." size="lg" />;
 
   if (error) {
@@ -122,6 +129,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
           lead={selectedLead}
           onClose={() => setSelectedLead(null)}
           onSave={handleSave}
+          onConvertToOpportunity={handleConvertToOpportunity}
         />
       )}
     </div>

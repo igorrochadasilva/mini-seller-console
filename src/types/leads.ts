@@ -16,6 +16,24 @@ export interface Lead {
 }
 
 // ============================================================================
+// OPPORTUNITY TYPES
+// ============================================================================
+
+/**
+ * Base interface for an Opportunity entity
+ */
+export interface Opportunity {
+  id: string;
+  name: string;
+  stage: 'Prospecting' | 'Qualification' | 'Proposal' | 'Negotiation' | 'Closed Won' | 'Closed Lost';
+  amount?: number;
+  accountName: string;
+  leadId: string; // Reference to the original lead
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// ============================================================================
 // API TYPES
 // ============================================================================
 
@@ -94,6 +112,7 @@ export interface LeadDetailPanelProps {
   lead: Lead;
   onClose: () => void;
   onSave: (updatedLead: Lead) => void;
+  onConvertToOpportunity: (lead: Lead) => void;
 }
 
 /**
