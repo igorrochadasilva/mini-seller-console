@@ -1,6 +1,12 @@
 import React from 'react';
 import { Input } from './ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 import { Button } from './ui/button';
 import { Search, Filter, TrendingUp, TrendingDown } from 'lucide-react';
 import { LeadsFiltersProps } from '@/types';
@@ -23,7 +29,7 @@ const LeadsFilters: React.FC<LeadsFiltersProps> = ({
           type="text"
           placeholder="Search by name or company..."
           value={searchTerm}
-          onChange={(e) => onSearchChange(e.target.value)}
+          onChange={e => onSearchChange(e.target.value)}
           className="pl-10 bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent h-9"
         />
       </div>
@@ -35,11 +41,33 @@ const LeadsFilters: React.FC<LeadsFiltersProps> = ({
           <SelectValue placeholder="Filter by status" />
         </SelectTrigger>
         <SelectContent className="bg-gray-800 border-gray-700">
-          <SelectItem value="all" className="hover:bg-gray-700 text-white">All Statuses</SelectItem>
-          <SelectItem value={LeadStatus.NEW} className="hover:bg-gray-700 text-white">{LeadStatus.NEW}</SelectItem>
-          <SelectItem value={LeadStatus.CONTACTED} className="hover:bg-gray-700 text-white">{LeadStatus.CONTACTED}</SelectItem>
-          <SelectItem value={LeadStatus.QUALIFIED} className="hover:bg-gray-700 text-white">{LeadStatus.QUALIFIED}</SelectItem>
-          <SelectItem value={LeadStatus.DISQUALIFIED} className="hover:bg-gray-700 text-white">{LeadStatus.DISQUALIFIED}</SelectItem>
+          <SelectItem value="all" className="hover:bg-gray-700 text-white">
+            All Statuses
+          </SelectItem>
+          <SelectItem
+            value={LeadStatus.NEW}
+            className="hover:bg-gray-700 text-white"
+          >
+            {LeadStatus.NEW}
+          </SelectItem>
+          <SelectItem
+            value={LeadStatus.CONTACTED}
+            className="hover:bg-gray-700 text-white"
+          >
+            {LeadStatus.CONTACTED}
+          </SelectItem>
+          <SelectItem
+            value={LeadStatus.QUALIFIED}
+            className="hover:bg-gray-700 text-white"
+          >
+            {LeadStatus.QUALIFIED}
+          </SelectItem>
+          <SelectItem
+            value={LeadStatus.DISQUALIFIED}
+            className="hover:bg-gray-700 text-white"
+          >
+            {LeadStatus.DISQUALIFIED}
+          </SelectItem>
         </SelectContent>
       </Select>
 
@@ -54,7 +82,10 @@ const LeadsFilters: React.FC<LeadsFiltersProps> = ({
         ) : (
           <TrendingUp className="w-4 h-4 mr-2" />
         )}
-        Score {scoreSortDirection === ScoreSortDirection.DESC ? 'High→Low' : 'Low→High'}
+        Score{' '}
+        {scoreSortDirection === ScoreSortDirection.DESC
+          ? 'High→Low'
+          : 'Low→High'}
       </Button>
     </div>
   );

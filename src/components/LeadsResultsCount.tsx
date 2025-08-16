@@ -8,7 +8,11 @@ interface LeadsResultsCountProps {
   statusFilter: LeadStatus | 'all';
 }
 
-const LeadsResultsCount: React.FC<LeadsResultsCountProps> = ({ count, searchTerm, statusFilter }) => {
+const LeadsResultsCount: React.FC<LeadsResultsCountProps> = ({
+  count,
+  searchTerm,
+  statusFilter,
+}) => {
   const getMessage = () => {
     if (searchTerm && statusFilter !== 'all') {
       return `${count} lead${count !== 1 ? 's' : ''} matching "${searchTerm}" with status "${statusFilter}"`;

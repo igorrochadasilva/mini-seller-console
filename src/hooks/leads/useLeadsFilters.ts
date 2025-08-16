@@ -24,11 +24,11 @@ export const useLeadsFilters = () => {
     if (!leads.length) return [];
 
     // Single pass filtering for better performance
-    const filtered = leads.filter((lead) => {
+    const filtered = leads.filter(lead => {
       // Apply search filter
       if (searchTerm.trim()) {
         const searchLower = searchTerm.toLowerCase();
-        const matchesSearch = 
+        const matchesSearch =
           lead.name.toLowerCase().includes(searchLower) ||
           lead.company.toLowerCase().includes(searchLower);
         if (!matchesSearch) return false;
@@ -44,8 +44,8 @@ export const useLeadsFilters = () => {
 
     // Apply sorting
     return filtered.sort((a, b) => {
-      return scoreSortDirection === ScoreSortDirection.ASC 
-        ? a.score - b.score 
+      return scoreSortDirection === ScoreSortDirection.ASC
+        ? a.score - b.score
         : b.score - a.score;
     });
   }, [leads, searchTerm, statusFilter, scoreSortDirection]);

@@ -16,15 +16,21 @@ const LeadInformation: React.FC<LeadInformationProps> = ({ lead }) => {
       <div className="space-y-3 text-sm">
         <div className="flex justify-between">
           <span className="text-gray-400">Name:</span>
-          <TypographyP className="text-white font-medium">{lead.name}</TypographyP>
+          <TypographyP className="text-white font-medium">
+            {lead.name}
+          </TypographyP>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-400">Company:</span>
-          <TypographyP className="text-white font-medium">{lead.company}</TypographyP>
+          <TypographyP className="text-white font-medium">
+            {lead.company}
+          </TypographyP>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-400">Score:</span>
-          <TypographyP className="text-white font-medium">{lead.score}</TypographyP>
+          <TypographyP className="text-white font-medium">
+            {lead.score}
+          </TypographyP>
         </div>
       </div>
     </div>

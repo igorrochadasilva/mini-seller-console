@@ -1,5 +1,12 @@
 import React from 'react';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 import { Lead } from '@/types';
 import { getScoreColor, getStatusColor } from '@/lib/leadUtils';
 import { COMMON_STYLES } from '@/lib/constants';
@@ -56,12 +63,16 @@ const LeadsTable: React.FC<LeadsTableProps> = ({ leads, onRowClick }) => {
                   {lead.source}
                 </TableCell>
                 <TableCell className="px-4 py-3">
-                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getScoreColor(lead.score)}`}>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getScoreColor(lead.score)}`}
+                  >
                     {lead.score}
                   </span>
                 </TableCell>
                 <TableCell className="px-4 py-3">
-                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(lead.status)}`}>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(lead.status)}`}
+                  >
                     {lead.status}
                   </span>
                 </TableCell>

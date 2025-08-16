@@ -21,7 +21,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
     scoreSortDirection,
     setSearchTerm,
     setStatusFilter,
-    toggleScoreSort
+    toggleScoreSort,
   } = useLeadsFilters();
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -41,14 +41,11 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
 
   // Render leads directly - no need for memoization here
   const mobileLeadsCards = filteredLeads.map((lead: Lead) => (
-    <LeadCard 
-      key={lead.id} 
-      lead={lead}
-      onClick={handleRowClick}
-    />
+    <LeadCard key={lead.id} lead={lead} onClick={handleRowClick} />
   ));
 
-  if (isLoading) return <LoadingSpinner message="Loading leads..." size={SpinnerSize.LG} />;
+  if (isLoading)
+    return <LoadingSpinner message="Loading leads..." size={SpinnerSize.LG} />;
 
   if (error) {
     return (
@@ -71,7 +68,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
           onStatusFilterChange={setStatusFilter}
           onScoreSortToggle={toggleScoreSort}
         />
-        
+
         <LeadsResultsCount
           count={filteredLeads.length}
           searchTerm={searchTerm}
@@ -88,16 +85,11 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
       ) : (
         <>
           {/* Mobile Cards View */}
-          <div className="lg:hidden space-y-3">
-            {mobileLeadsCards}
-          </div>
+          <div className="lg:hidden space-y-3">{mobileLeadsCards}</div>
 
           {/* Desktop Table View */}
           <div className="hidden lg:block">
-            <LeadsTable 
-              leads={filteredLeads}
-              onRowClick={handleRowClick}
-            />
+            <LeadsTable leads={filteredLeads} onRowClick={handleRowClick} />
           </div>
         </>
       )}

@@ -4,7 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { Opportunity } from '@/types';
 import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
-import { opportunityUpdateSchema, OpportunityUpdateFormData } from '@/schemas/opportunities';
+import {
+  opportunityUpdateSchema,
+  OpportunityUpdateFormData,
+} from '@/schemas/opportunities';
 import ModalHeader from './EditOpportunityModal/ModalHeader';
 import OpportunityForm from './EditOpportunityModal/OpportunityForm';
 import ModalFooter from './EditOpportunityModal/ModalFooter';
@@ -38,7 +41,10 @@ const EditOpportunityModal: React.FC<EditOpportunityModalProps> = ({
     },
   });
 
-  const { handleSubmit, formState: { isSubmitting } } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = (data: OpportunityUpdateFormData) => {
     // Update opportunity in Zustand store

@@ -7,7 +7,7 @@ interface FiltersState {
   searchTerm: string;
   statusFilter: LeadStatus | 'all';
   scoreSortDirection: ScoreSortDirection;
-  
+
   // Actions
   setSearchTerm: (term: string) => void;
   setStatusFilter: (filter: LeadStatus | 'all') => void;
@@ -23,29 +23,34 @@ export const useFiltersStore = create<FiltersState>()(
       searchTerm: '',
       statusFilter: 'all',
       scoreSortDirection: ScoreSortDirection.DESC,
-      
+
       // Actions
       setSearchTerm: (term: string) => set({ searchTerm: term }),
-      
-      setStatusFilter: (filter: LeadStatus | 'all') => set({ statusFilter: filter }),
-      
-      setScoreSortDirection: (direction: ScoreSortDirection) => set({ scoreSortDirection: direction }),
-      
-      toggleScoreSort: () => set((state) => ({
-        scoreSortDirection: state.scoreSortDirection === ScoreSortDirection.ASC 
-          ? ScoreSortDirection.DESC 
-          : ScoreSortDirection.ASC
-      })),
-      
-      resetFilters: () => set({
-        searchTerm: '',
-        statusFilter: 'all',
-        scoreSortDirection: ScoreSortDirection.DESC,
-      }),
+
+      setStatusFilter: (filter: LeadStatus | 'all') =>
+        set({ statusFilter: filter }),
+
+      setScoreSortDirection: (direction: ScoreSortDirection) =>
+        set({ scoreSortDirection: direction }),
+
+      toggleScoreSort: () =>
+        set(state => ({
+          scoreSortDirection:
+            state.scoreSortDirection === ScoreSortDirection.ASC
+              ? ScoreSortDirection.DESC
+              : ScoreSortDirection.ASC,
+        })),
+
+      resetFilters: () =>
+        set({
+          searchTerm: '',
+          statusFilter: 'all',
+          scoreSortDirection: ScoreSortDirection.DESC,
+        }),
     }),
     {
       name: 'leads-filters-storage',
-      partialize: (state) => ({
+      partialize: state => ({
         searchTerm: state.searchTerm,
         statusFilter: state.statusFilter,
         scoreSortDirection: state.scoreSortDirection,

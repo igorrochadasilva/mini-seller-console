@@ -1,4 +1,9 @@
-import { LeadStatus, OpportunityStage, ScoreSortDirection, SpinnerSize } from './enums';
+import {
+  LeadStatus,
+  OpportunityStage,
+  ScoreSortDirection,
+  SpinnerSize,
+} from './enums';
 
 // ============================================================================
 // LEAD TYPES

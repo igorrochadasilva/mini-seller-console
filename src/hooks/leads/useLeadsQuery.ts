@@ -11,12 +11,12 @@ export const useLeadsQuery = (): UseLeadsQueryResult => {
     queryKey: ['leads'],
     queryFn: () =>
       getLeads()
-        .then((result) => {
+        .then(result => {
           setLeads(result);
           toast.success('Leads loaded successfully');
           return result;
         })
-        .catch((error) => {
+        .catch(error => {
           toast.error('Failed to load leads', {
             description: error.message || 'An unexpected error occurred',
           });

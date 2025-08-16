@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { TypographyH1, Button, Container } from "@/components/ui";
+import { TypographyH1, Button, Container } from '@/components/ui';
 import LeadsList from '@/components/LeadsList';
 import OpportunitiesList from '@/components/OpportunitiesList';
 import { Users, TrendingUp } from 'lucide-react';
 
 function Home() {
-  const [activeTab, setActiveTab] = useState<'leads' | 'opportunities'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'opportunities'>(
+    'leads'
+  );
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -16,7 +18,7 @@ function Home() {
             <TypographyH1 className="text-xl sm:text-2xl font-semibold text-white">
               Mini Seller Console
             </TypographyH1>
-            
+
             {/* Tab Navigation */}
             <div className="flex space-x-1 bg-gray-800/50 rounded-lg p-1 border border-gray-700/50">
               <Button
@@ -53,11 +55,7 @@ function Home() {
       {/* Main Content */}
       <Container fullWidth className="py-6">
         <div className="min-h-[600px] sm:min-h-[700px] lg:min-h-[800px]">
-          {activeTab === 'leads' ? (
-            <LeadsList />
-          ) : (
-            <OpportunitiesList />
-          )}
+          {activeTab === 'leads' ? <LeadsList /> : <OpportunitiesList />}
         </div>
       </Container>
     </div>

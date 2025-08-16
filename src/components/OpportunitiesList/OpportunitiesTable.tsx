@@ -1,5 +1,12 @@
 import React from 'react';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Opportunity, OpportunityStage } from '@/types';
 import { Edit, Trash2 } from 'lucide-react';
@@ -10,7 +17,11 @@ interface OpportunitiesTableProps {
   onDelete: (id: string) => void;
 }
 
-const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({ opportunities, onEdit, onDelete }) => {
+const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({
+  opportunities,
+  onEdit,
+  onDelete,
+}) => {
   const getStageColor = (stage: OpportunityStage) => {
     switch (stage) {
       case OpportunityStage.PROSPECTING:
@@ -62,7 +73,7 @@ const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({ opportunities, 
             </TableRow>
           </TableHeader>
           <TableBody>
-            {opportunities.map((opportunity) => (
+            {opportunities.map(opportunity => (
               <TableRow
                 key={opportunity.id}
                 className="hover:bg-gray-800/30 transition-colors duration-150 border-b border-gray-800/50"
@@ -71,7 +82,9 @@ const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({ opportunities, 
                   {opportunity.name}
                 </TableCell>
                 <TableCell className="px-4 py-3">
-                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getStageColor(opportunity.stage)}`}>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getStageColor(opportunity.stage)}`}
+                  >
                     {opportunity.stage}
                   </span>
                 </TableCell>

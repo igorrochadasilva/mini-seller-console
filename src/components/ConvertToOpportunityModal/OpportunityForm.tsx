@@ -3,7 +3,13 @@ import { useFormContext } from 'react-hook-form';
 import { OpportunityCreateFormData } from '@/schemas/opportunities';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { OpportunityStage } from '@/types/enums';
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
 
@@ -35,7 +41,9 @@ const OpportunityForm: React.FC = () => {
           placeholder="Enter opportunity name"
         />
         {errors.name && (
-          <TypographyP className="text-red-400 text-sm">{errors.name.message}</TypographyP>
+          <TypographyP className="text-red-400 text-sm">
+            {errors.name.message}
+          </TypographyP>
         )}
       </div>
 
@@ -46,34 +54,57 @@ const OpportunityForm: React.FC = () => {
         </Label>
         <Select
           value={watchedStage}
-          onValueChange={(value) => setValue('stage', value as OpportunityStage)}
+          onValueChange={value => setValue('stage', value as OpportunityStage)}
         >
-          <SelectTrigger id="stage" className="bg-gray-800/50 border-gray-600 text-white">
+          <SelectTrigger
+            id="stage"
+            className="bg-gray-800/50 border-gray-600 text-white"
+          >
             <SelectValue placeholder="Select stage" />
           </SelectTrigger>
           <SelectContent className="bg-gray-800 border-gray-600">
-            <SelectItem value={OpportunityStage.PROSPECTING} className="hover:bg-gray-700 text-white">
+            <SelectItem
+              value={OpportunityStage.PROSPECTING}
+              className="hover:bg-gray-700 text-white"
+            >
               {OpportunityStage.PROSPECTING}
             </SelectItem>
-            <SelectItem value={OpportunityStage.QUALIFICATION} className="hover:bg-gray-700 text-white">
+            <SelectItem
+              value={OpportunityStage.QUALIFICATION}
+              className="hover:bg-gray-700 text-white"
+            >
               {OpportunityStage.QUALIFICATION}
             </SelectItem>
-            <SelectItem value={OpportunityStage.PROPOSAL} className="hover:bg-gray-700 text-white">
+            <SelectItem
+              value={OpportunityStage.PROPOSAL}
+              className="hover:bg-gray-700 text-white"
+            >
               {OpportunityStage.PROPOSAL}
             </SelectItem>
-            <SelectItem value={OpportunityStage.NEGOTIATION} className="hover:bg-gray-700 text-white">
+            <SelectItem
+              value={OpportunityStage.NEGOTIATION}
+              className="hover:bg-gray-700 text-white"
+            >
               {OpportunityStage.NEGOTIATION}
             </SelectItem>
-            <SelectItem value={OpportunityStage.CLOSED_WON} className="hover:bg-gray-700 text-white">
+            <SelectItem
+              value={OpportunityStage.CLOSED_WON}
+              className="hover:bg-gray-700 text-white"
+            >
               {OpportunityStage.CLOSED_WON}
             </SelectItem>
-            <SelectItem value={OpportunityStage.CLOSED_LOST} className="hover:bg-gray-700 text-white">
+            <SelectItem
+              value={OpportunityStage.CLOSED_LOST}
+              className="hover:bg-gray-700 text-white"
+            >
               {OpportunityStage.CLOSED_LOST}
             </SelectItem>
           </SelectContent>
         </Select>
         {errors.stage && (
-          <TypographyP className="text-red-400 text-sm">{errors.stage.message}</TypographyP>
+          <TypographyP className="text-red-400 text-sm">
+            {errors.stage.message}
+          </TypographyP>
         )}
       </div>
 
@@ -92,7 +123,9 @@ const OpportunityForm: React.FC = () => {
           placeholder="Enter amount"
         />
         {errors.amount && (
-          <TypographyP className="text-red-400 text-sm">{errors.amount.message}</TypographyP>
+          <TypographyP className="text-red-400 text-sm">
+            {errors.amount.message}
+          </TypographyP>
         )}
       </div>
 
@@ -108,7 +141,9 @@ const OpportunityForm: React.FC = () => {
           placeholder="Enter account name"
         />
         {errors.accountName && (
-          <TypographyP className="text-red-400 text-sm">{errors.accountName.message}</TypographyP>
+          <TypographyP className="text-red-400 text-sm">
+            {errors.accountName.message}
+          </TypographyP>
         )}
       </div>
     </div>

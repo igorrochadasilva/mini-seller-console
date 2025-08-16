@@ -15,10 +15,7 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
   const statusColor = getStatusColor(lead.status);
 
   return (
-    <Card 
-      className={COMMON_STYLES.card.base}
-      onClick={() => onClick(lead)}
-    >
+    <Card className={COMMON_STYLES.card.base} onClick={() => onClick(lead)}>
       <CardContent className={COMMON_STYLES.card.content}>
         <div className="space-y-3">
           {/* Header */}
@@ -32,15 +29,19 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
               </TypographyP>
             </div>
             <div className="flex flex-col items-end gap-1">
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${scoreColor}`}>
+              <span
+                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${scoreColor}`}
+              >
                 {lead.score}
               </span>
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${statusColor}`}>
+              <span
+                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${statusColor}`}
+              >
                 {lead.status}
               </span>
             </div>
           </div>
-          
+
           {/* Details */}
           <div className="space-y-2">
             <div className="flex items-center text-xs text-gray-300">

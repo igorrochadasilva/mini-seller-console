@@ -21,8 +21,12 @@ const EmptyState: React.FC<EmptyStateProps> = ({ title, message }) => {
           />
         </svg>
       </div>
-      <TypographyH3 className="text-2xl font-semibold text-white mb-3">{title}</TypographyH3>
-      <TypographyP className="text-gray-400 max-w-md text-lg">{message}</TypographyP>
+      <TypographyH3 className="text-2xl font-semibold text-white mb-3">
+        {title}
+      </TypographyH3>
+      <TypographyP className="text-gray-400 max-w-md text-lg">
+        {message}
+      </TypographyP>
     </div>
   );
 };

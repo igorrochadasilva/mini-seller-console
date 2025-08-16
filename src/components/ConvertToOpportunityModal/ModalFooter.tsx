@@ -7,7 +7,10 @@ interface ModalFooterProps {
   onCancel: () => void;
 }
 
-const ModalFooter: React.FC<ModalFooterProps> = ({ isSubmitting, onCancel }) => {
+const ModalFooter: React.FC<ModalFooterProps> = ({
+  isSubmitting,
+  onCancel,
+}) => {
   return (
     <div className="flex gap-3">
       <Button

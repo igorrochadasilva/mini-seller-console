@@ -17,8 +17,12 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ lead, onClose }) => {
           <Zap className="w-5 h-5 text-blue-400" />
         </div>
         <div>
-          <TypographyH2 className="text-xl font-bold text-white">Convert to Opportunity</TypographyH2>
-          <TypographyP className="text-sm text-gray-400">Create opportunity from {lead.name}</TypographyP>
+          <TypographyH2 className="text-xl font-bold text-white">
+            Convert to Opportunity
+          </TypographyH2>
+          <TypographyP className="text-sm text-gray-400">
+            Create opportunity from {lead.name}
+          </TypographyP>
         </div>
       </div>
       <Button

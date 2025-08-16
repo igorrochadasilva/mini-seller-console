@@ -17,8 +17,12 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ opportunity, onClose }) => {
           <Save className="w-5 h-5 text-blue-400" />
         </div>
         <div>
-          <TypographyH2 className="text-xl font-bold text-white">Edit Opportunity</TypographyH2>
-          <TypographyP className="text-sm text-gray-400">Update opportunity details</TypographyP>
+          <TypographyH2 className="text-xl font-bold text-white">
+            Edit Opportunity
+          </TypographyH2>
+          <TypographyP className="text-sm text-gray-400">
+            Update opportunity details
+          </TypographyP>
         </div>
       </div>
       <Button

@@ -12,10 +12,15 @@ import EditFields from './LeadDetailPanel/EditFields';
 import ConvertToOpportunityModal from './ConvertToOpportunityModal';
 import { TypographyH2 } from './ui/typograph';
 
-const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave, onConvertToOpportunity }) => {
+const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({
+  lead,
+  onClose,
+  onSave,
+  onConvertToOpportunity,
+}) => {
   const { updateLead } = useLeadsStore();
   const [showConvertModal, setShowConvertModal] = useState(false);
-  
+
   const methods = useForm<LeadUpdateFormData>({
     resolver: zodResolver(leadUpdateSchema),
     defaultValues: {
@@ -24,7 +29,10 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
     },
   });
 
-  const { handleSubmit, formState: { isSubmitting } } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = async (data: any) => {
     try {
@@ -36,18 +44,21 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
 
       // Call parent onSave callback
       onSave({ ...lead, email: data.email, status: data.status });
-      
+
       // Show success toast
       toast.success('Lead updated successfully!', {
         description: `Updated ${lead.name}'s information`,
       });
-      
+
       // Close panel
       onClose();
     } catch (error) {
       // Show error toast
       toast.error('Failed to update lead', {
-        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'An unexpected error occurred',
       });
     }
   };
@@ -59,7 +70,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
   const handleConversionSuccess = (opportunity: Opportunity) => {
     // Call parent callback
     onConvertToOpportunity(opportunity);
-    
+
     // Show additional success message
     toast.success('Lead converted to opportunity!', {
       description: `Opportunity "${opportunity.name}" created successfully`,
@@ -72,7 +83,9 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
         <div className="bg-gray-900 w-full max-w-md h-full overflow-y-auto border-l border-gray-700 shadow-2xl">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-700 bg-gray-800/50">
-            <TypographyH2 className="text-xl font-bold text-white">Edit Lead</TypographyH2>
+            <TypographyH2 className="text-xl font-bold text-white">
+              Edit Lead
+            </TypographyH2>
             <Button
               variant="ghost"
               size="icon"
@@ -143,4 +156,3 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
 };
 
 export default LeadDetailPanel;
-

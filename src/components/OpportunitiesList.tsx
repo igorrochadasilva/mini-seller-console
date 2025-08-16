@@ -14,7 +14,8 @@ import OpportunitiesTable from './OpportunitiesList/OpportunitiesTable';
 
 const OpportunitiesList: React.FC = () => {
   const { opportunities, deleteOpportunity } = useOpportunitiesStore();
-  const [editingOpportunity, setEditingOpportunity] = useState<Opportunity | null>(null);
+  const [editingOpportunity, setEditingOpportunity] =
+    useState<Opportunity | null>(null);
 
   const handleEdit = (opportunity: Opportunity) => {
     setEditingOpportunity(opportunity);
@@ -24,7 +25,9 @@ const OpportunitiesList: React.FC = () => {
     const opportunity = opportunities.find(opp => opp.id === id);
     if (!opportunity) return;
 
-    if (window.confirm(`Are you sure you want to delete "${opportunity.name}"?`)) {
+    if (
+      window.confirm(`Are you sure you want to delete "${opportunity.name}"?`)
+    ) {
       deleteOpportunity(id);
       toast.success('Opportunity deleted successfully!', {
         description: `Deleted: ${opportunity.name}`,
@@ -46,12 +49,17 @@ const OpportunitiesList: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <TypographyH2 className="text-xl sm:text-2xl font-bold text-white">Opportunities</TypographyH2>
-          <TypographyP className="text-sm text-gray-400">Manage your sales opportunities</TypographyP>
+          <TypographyH2 className="text-xl sm:text-2xl font-bold text-white">
+            Opportunities
+          </TypographyH2>
+          <TypographyP className="text-sm text-gray-400">
+            Manage your sales opportunities
+          </TypographyP>
         </div>
         <div className="flex items-center gap-2">
           <TypographyP className="text-sm text-gray-400">
-            {opportunities.length} opportunity{opportunities.length !== 1 ? 's' : ''}
+            {opportunities.length} opportunity
+            {opportunities.length !== 1 ? 's' : ''}
           </TypographyP>
         </div>
       </div>
@@ -60,7 +68,7 @@ const OpportunitiesList: React.FC = () => {
       <>
         {/* Mobile Cards View */}
         <div className="lg:hidden space-y-3">
-          {opportunities.map((opportunity) => (
+          {opportunities.map(opportunity => (
             <OpportunityCard
               key={opportunity.id}
               opportunity={opportunity}

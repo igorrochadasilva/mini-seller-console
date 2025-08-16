@@ -4,7 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { Lead, Opportunity } from '@/types';
 import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
-import { opportunityCreateSchema, OpportunityCreateFormData } from '@/schemas/opportunities';
+import {
+  opportunityCreateSchema,
+  OpportunityCreateFormData,
+} from '@/schemas/opportunities';
 import { OpportunityStage } from '@/types/enums';
 import { generateOpportunityId } from '@/lib/leadUtils';
 import ModalHeader from './ConvertToOpportunityModal/ModalHeader';
@@ -42,7 +45,10 @@ const ConvertToOpportunityModal: React.FC<ConvertToOpportunityModalProps> = ({
     },
   });
 
-  const { handleSubmit, formState: { isSubmitting } } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = async (data: OpportunityCreateFormData) => {
     try {
@@ -71,7 +77,10 @@ const ConvertToOpportunityModal: React.FC<ConvertToOpportunityModalProps> = ({
     } catch (error) {
       // Show error toast
       toast.error('Failed to convert lead', {
-        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'An unexpected error occurred',
       });
     }
   };

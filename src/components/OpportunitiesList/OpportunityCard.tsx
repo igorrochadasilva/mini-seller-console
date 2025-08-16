@@ -11,7 +11,11 @@ interface OpportunityCardProps {
   onDelete: (id: string) => void;
 }
 
-const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onEdit, onDelete }) => {
+const OpportunityCard: React.FC<OpportunityCardProps> = ({
+  opportunity,
+  onEdit,
+  onDelete,
+}) => {
   const getStageColor = (stage: OpportunityStage) => {
     switch (stage) {
       case OpportunityStage.PROSPECTING:
@@ -53,11 +57,13 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onEdit, 
                 {opportunity.accountName || 'No account'}
               </TypographyP>
             </div>
-            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStageColor(opportunity.stage)}`}>
+            <span
+              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getStageColor(opportunity.stage)}`}
+            >
               {opportunity.stage}
             </span>
           </div>
-          
+
           {/* Details */}
           <div className="space-y-2">
             <div className="flex items-center text-xs text-gray-300">

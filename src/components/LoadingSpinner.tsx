@@ -3,7 +3,10 @@ import { LoadingSpinnerProps } from '@/types';
 import { SpinnerSize } from '@/types/enums';
 import { TypographyP } from './ui/typograph';
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...', size = SpinnerSize.MD }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  message = 'Loading...',
+  size = SpinnerSize.MD,
+}) => {
   const getSizeClasses = () => {
     switch (size) {
       case SpinnerSize.SM:
@@ -17,9 +20,13 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...',
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full min-h-[400px] space-y-6">
-      <div className={`animate-spin rounded-full border-3 border-gray-300/30 border-t-blue-500 ${getSizeClasses()}`} />
+      <div
+        className={`animate-spin rounded-full border-3 border-gray-300/30 border-t-blue-500 ${getSizeClasses()}`}
+      />
       {message && (
-        <TypographyP className="text-gray-400 text-lg font-medium">{message}</TypographyP>
+        <TypographyP className="text-gray-400 text-lg font-medium">
+          {message}
+        </TypographyP>
       )}
     </div>
   );
