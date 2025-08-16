@@ -9,6 +9,7 @@ import LeadsFilters from './LeadsFilters';
 import LeadsResultsCount from './LeadsResultsCount';
 import { Lead, LeadsListProps } from '@/types';
 import { LeadStatus, SpinnerSize } from '@/types/enums';
+import { Opportunity } from '@/types';
 
 const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   const { isLoading, error } = useLeadsQuery();
@@ -34,9 +35,9 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
     setSelectedLead(null);
   };
 
-  const handleConvertToOpportunity = (lead: Lead) => {
+  const handleConvertToOpportunity = (opportunity: Opportunity) => {
     // TODO: Implement opportunity conversion logic
-    console.log('Converting lead to opportunity:', lead);
+    console.log('Lead converted to opportunity:', opportunity);
     // For now, just close the panel
     setSelectedLead(null);
   };

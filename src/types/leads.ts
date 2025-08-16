@@ -109,7 +109,7 @@ export interface LeadDetailPanelProps {
   lead: Lead;
   onClose: () => void;
   onSave: (updatedLead: Lead) => void;
-  onConvertToOpportunity: (lead: Lead) => void;
+  onConvertToOpportunity: (opportunity: Opportunity) => void;
 }
 
 /**

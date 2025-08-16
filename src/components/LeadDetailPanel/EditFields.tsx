@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Mail, TrendingUp, AlertCircle } from 'lucide-react';
 import { LeadStatus } from '@/types/enums';
+import { TypographyH3, TypographyP } from '@/components/ui/typograph';
 
 const EditFields: React.FC = () => {
   const {
@@ -19,7 +20,7 @@ const EditFields: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Edit Fields</h3>
+      <TypographyH3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Edit Fields</TypographyH3>
       
       {/* Email Field */}
       <div className="space-y-2">
@@ -37,10 +38,10 @@ const EditFields: React.FC = () => {
           placeholder="Enter email address"
         />
         {errors.email && (
-          <p className="text-red-400 text-sm flex items-center gap-1">
+          <TypographyP className="text-red-400 text-sm flex items-center gap-1">
             <AlertCircle className="w-3 h-3" />
             {errors.email.message}
-          </p>
+          </TypographyP>
         )}
       </div>
 
@@ -62,10 +63,10 @@ const EditFields: React.FC = () => {
           </SelectContent>
         </Select>
         {errors.status && (
-          <p className="text-red-400 text-sm flex items-center gap-1">
+          <TypographyP className="text-red-400 text-sm flex items-center gap-1">
             <AlertCircle className="w-3 h-3" />
             {errors.status.message}
-          </p>
+          </TypographyP>
         )}
       </div>
     </div>

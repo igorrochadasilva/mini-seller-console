@@ -2,6 +2,7 @@ import React from 'react';
 import { Lead } from '@/types';
 import { Label } from '@/components/ui/label';
 import { User, Building, TrendingUp } from 'lucide-react';
+import { TypographyH3, TypographyP } from '@/components/ui/typograph';
 
 interface LeadInformationProps {
   lead: Lead;
@@ -10,14 +11,14 @@ interface LeadInformationProps {
 const LeadInformation: React.FC<LeadInformationProps> = ({ lead }) => {
   return (
     <div className="space-y-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50">
-      <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Lead Information</h3>
+      <TypographyH3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Lead Information</TypographyH3>
       
       <div className="space-y-3">
         <div className="flex items-center gap-3">
           <User className="w-4 h-4 text-blue-400" />
           <div>
             <Label className="text-xs text-gray-400">Name</Label>
-            <p className="text-white font-medium">{lead.name}</p>
+            <TypographyP className="text-white font-medium">{lead.name}</TypographyP>
           </div>
         </div>
         
@@ -25,7 +26,7 @@ const LeadInformation: React.FC<LeadInformationProps> = ({ lead }) => {
           <Building className="w-4 h-4 text-green-400" />
           <div>
             <Label className="text-xs text-gray-400">Company</Label>
-            <p className="text-white font-medium">{lead.company}</p>
+            <TypographyP className="text-white font-medium">{lead.company}</TypographyP>
           </div>
         </div>
         

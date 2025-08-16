@@ -1,6 +1,7 @@
 import React from 'react';
 import { LoadingSpinnerProps } from '@/types';
 import { SpinnerSize } from '@/types/enums';
+import { TypographyP } from './ui/typograph';
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...', size = SpinnerSize.MD }) => {
   const getSizeClasses = () => {
@@ -18,7 +19,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...',
     <div className="flex flex-col items-center justify-center p-8 space-y-4">
       <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-blue-500 ${getSizeClasses()}`} />
       {message && (
-        <p className="text-gray-400 text-sm font-medium">{message}</p>
+        <TypographyP className="text-gray-400 text-sm font-medium">{message}</TypographyP>
       )}
     </div>
   );

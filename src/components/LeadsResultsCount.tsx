@@ -1,6 +1,7 @@
 import React from 'react';
 import { LeadsResultsCountProps } from '@/types';
 import { LeadStatus } from '@/types/enums';
+import { TypographyP } from './ui/typograph';
 
 const LeadsResultsCount: React.FC<LeadsResultsCountProps> = ({ count, searchTerm, statusFilter }) => {
   const getFilterDescription = () => {
@@ -27,9 +28,9 @@ const LeadsResultsCount: React.FC<LeadsResultsCountProps> = ({ count, searchTerm
         <div className="text-sm text-gray-300">
           <span className="font-medium text-white">{count}</span> lead{count !== 1 ? 's' : ''} found
         </div>
-        <div className="text-xs text-gray-400">
+        <TypographyP className="text-xs text-gray-400">
           {getFilterDescription()}
-        </div>
+        </TypographyP>
       </div>
     </div>
   );
