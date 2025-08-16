@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input } from "./ui/input";
 import { Select, SelectItem, SelectContent } from "./ui/select";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./ui/table";
+import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
 
 interface Lead {
   id: string;
@@ -14,21 +15,19 @@ interface Lead {
 }
 
 function LeadsList() {
-  const [leads, setLeads] = useState<Lead[]>([]);
+  const { data: leads = [], isLoading, error } = useLeadsQuery();
+
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
-
-  useEffect(() => {
-    fetch('/src/leads.json')
-      .then(response => response.json())
-      .then(data => setLeads(data));
-  }, []);
 
   const filteredLeads = leads.filter(lead =>
     (lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
      lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
     (statusFilter ? lead.status === statusFilter : true)
   );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading leads</div>;
 
   return (
     <div className="leads-list">
@@ -61,7 +60,7 @@ function LeadsList() {
         </TableHeader>
         <TableBody>
           {filteredLeads.map(lead => (
-            <TableRow key={lead.id} className="hover:bg-gray-800">
+            <TableRow key={lead.id} className="">
               <TableCell className="p-4 border-b border-gray-700">{lead.name}</TableCell>
               <TableCell className="p-4 border-b border-gray-700">{lead.company}</TableCell>
               <TableCell className="p-4 border-b border-gray-700">{lead.email}</TableCell>
