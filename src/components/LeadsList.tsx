@@ -3,6 +3,7 @@ import { Input } from "./ui/input";
 import { Select, SelectItem, SelectContent } from "./ui/select";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./ui/table";
 import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
+import LeadDetailPanel from './LeadDetailPanel';
 
 interface Lead {
   id: string;
@@ -16,6 +17,7 @@ interface Lead {
 
 function LeadsList() {
   const { data: leads = [], isLoading, error } = useLeadsQuery();
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -25,6 +27,16 @@ function LeadsList() {
      lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
     (statusFilter ? lead.status === statusFilter : true)
   );
+
+  const handleRowClick = (lead: Lead) => {
+    setSelectedLead(lead);
+  };
+
+  const handleSave = (updatedLead: Lead) => {
+    // Update the lead in the list (this would typically involve an API call)
+    const updatedLeads = leads.map(lead => lead.id === updatedLead.id ? updatedLead : lead);
+    setSelectedLead(null);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading leads</div>;
@@ -60,7 +72,7 @@ function LeadsList() {
         </TableHeader>
         <TableBody>
           {filteredLeads.map(lead => (
-            <TableRow key={lead.id} className="">
+            <TableRow key={lead.id} className="hover:bg-gray-800 cursor-pointer" onClick={() => handleRowClick(lead)}>
               <TableCell className="p-4 border-b border-gray-700">{lead.name}</TableCell>
               <TableCell className="p-4 border-b border-gray-700">{lead.company}</TableCell>
               <TableCell className="p-4 border-b border-gray-700">{lead.email}</TableCell>
@@ -71,6 +83,7 @@ function LeadsList() {
           ))}
         </TableBody>
       </Table>
+      {selectedLead && <LeadDetailPanel lead={selectedLead} onClose={() => setSelectedLead(null)} onSave={handleSave} />}
     </div>
   );
 }
