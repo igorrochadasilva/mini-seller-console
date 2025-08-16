@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TypographyH3, TypographyP } from '@/components/ui/typograph';
 import { Lead } from '@/types';
@@ -10,9 +10,9 @@ interface LeadCardProps {
   onClick: (lead: Lead) => void;
 }
 
-const LeadCard: React.FC<LeadCardProps> = React.memo(({ lead, onClick }) => {
-  const scoreColor = useMemo(() => getScoreColor(lead.score), [lead.score]);
-  const statusColor = useMemo(() => getStatusColor(lead.status), [lead.status]);
+const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
+  const scoreColor = getScoreColor(lead.score);
+  const statusColor = getStatusColor(lead.status);
 
   return (
     <Card 
@@ -56,6 +56,6 @@ const LeadCard: React.FC<LeadCardProps> = React.memo(({ lead, onClick }) => {
       </CardContent>
     </Card>
   );
-});
+};
 
 export default LeadCard;

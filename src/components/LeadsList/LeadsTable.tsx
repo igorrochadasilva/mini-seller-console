@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 import { Lead } from '@/types';
 import { getScoreColor, getStatusColor } from '@/lib/leadUtils';
@@ -10,11 +10,6 @@ interface LeadsTableProps {
 }
 
 const LeadsTable: React.FC<LeadsTableProps> = ({ leads, onRowClick }) => {
-  const getRowStyles = useMemo(() => (lead: Lead) => ({
-    scoreColor: getScoreColor(lead.score),
-    statusColor: getStatusColor(lead.status)
-  }), []);
-
   return (
     <div className="bg-gray-900/50 rounded-lg border border-gray-800 overflow-hidden">
       <div className="overflow-x-auto">
@@ -42,39 +37,36 @@ const LeadsTable: React.FC<LeadsTableProps> = ({ leads, onRowClick }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {leads.map((lead: Lead) => {
-              const styles = getRowStyles(lead);
-              return (
-                <TableRow
-                  key={lead.id}
-                  className={COMMON_STYLES.table.row}
-                  onClick={() => onRowClick(lead)}
-                >
-                  <TableCell className="px-4 py-3 font-medium text-sm text-gray-100">
-                    {lead.name}
-                  </TableCell>
-                  <TableCell className="px-4 py-3 text-sm text-gray-300">
-                    {lead.company}
-                  </TableCell>
-                  <TableCell className="px-4 py-3 text-sm text-gray-300">
-                    {lead.email}
-                  </TableCell>
-                  <TableCell className="px-4 py-3 text-sm text-gray-300">
-                    {lead.source}
-                  </TableCell>
-                  <TableCell className="px-4 py-3">
-                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${styles.scoreColor}`}>
-                      {lead.score}
-                    </span>
-                  </TableCell>
-                  <TableCell className="px-4 py-3">
-                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${styles.statusColor}`}>
-                      {lead.status}
-                    </span>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {leads.map((lead: Lead) => (
+              <TableRow
+                key={lead.id}
+                className={COMMON_STYLES.table.row}
+                onClick={() => onRowClick(lead)}
+              >
+                <TableCell className="px-4 py-3 font-medium text-sm text-gray-100">
+                  {lead.name}
+                </TableCell>
+                <TableCell className="px-4 py-3 text-sm text-gray-300">
+                  {lead.company}
+                </TableCell>
+                <TableCell className="px-4 py-3 text-sm text-gray-300">
+                  {lead.email}
+                </TableCell>
+                <TableCell className="px-4 py-3 text-sm text-gray-300">
+                  {lead.source}
+                </TableCell>
+                <TableCell className="px-4 py-3">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getScoreColor(lead.score)}`}>
+                    {lead.score}
+                  </span>
+                </TableCell>
+                <TableCell className="px-4 py-3">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(lead.status)}`}>
+                    {lead.status}
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

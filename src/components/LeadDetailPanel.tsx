@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -26,7 +26,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
 
   const { handleSubmit, formState: { isSubmitting } } = methods;
 
-  const onSubmit = useCallback(async (data: any) => {
+  const onSubmit = async (data: any) => {
     try {
       // Update lead in Zustand store
       updateLead(lead.id, {
@@ -50,13 +50,13 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
         description: error instanceof Error ? error.message : 'An unexpected error occurred',
       });
     }
-  }, [lead, updateLead, onSave, onClose]);
+  };
 
-  const handleConvertToOpportunity = useCallback(() => {
+  const handleConvertToOpportunity = () => {
     setShowConvertModal(true);
-  }, []);
+  };
 
-  const handleConversionSuccess = useCallback((opportunity: Opportunity) => {
+  const handleConversionSuccess = (opportunity: Opportunity) => {
     // Call parent callback
     onConvertToOpportunity(opportunity);
     
@@ -64,7 +64,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
     toast.success('Lead converted to opportunity!', {
       description: `Opportunity "${opportunity.name}" created successfully`,
     });
-  }, [onConvertToOpportunity]);
+  };
 
   return (
     <>

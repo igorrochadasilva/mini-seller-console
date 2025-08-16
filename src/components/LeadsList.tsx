@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
 import { useLeadsFilters } from '@/hooks/leads/useLeadsFilters';
 import LeadDetailPanel from './LeadDetailPanel';
@@ -26,35 +26,27 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
-  const handleRowClick = useCallback((lead: Lead) => {
+  const handleRowClick = (lead: Lead) => {
     setSelectedLead(lead);
-  }, []);
+  };
 
-  const handleSave = useCallback((updatedLead: Lead) => {
+  const handleSave = (updatedLead: Lead) => {
     setSelectedLead(null);
-  }, []);
+  };
 
-  const handleConvertToOpportunity = useCallback((opportunity: Opportunity) => {
+  const handleConvertToOpportunity = (opportunity: Opportunity) => {
     console.log('Lead converted to opportunity:', opportunity);
     setSelectedLead(null);
-  }, []);
+  };
 
-  // Memoize the leads rendering to prevent unnecessary re-renders
-  const mobileLeadsCards = useMemo(() => 
-    filteredLeads.map((lead: Lead) => (
-      <LeadCard 
-        key={lead.id} 
-        lead={lead}
-        onClick={handleRowClick}
-      />
-    )), [filteredLeads, handleRowClick]
-  );
-
-  // Memoize the table props to prevent unnecessary re-renders
-  const tableProps = useMemo(() => ({
-    leads: filteredLeads,
-    onRowClick: handleRowClick
-  }), [filteredLeads, handleRowClick]);
+  // Render leads directly - no need for memoization here
+  const mobileLeadsCards = filteredLeads.map((lead: Lead) => (
+    <LeadCard 
+      key={lead.id} 
+      lead={lead}
+      onClick={handleRowClick}
+    />
+  ));
 
   if (isLoading) return <LoadingSpinner message="Loading leads..." size={SpinnerSize.LG} />;
 
@@ -102,7 +94,10 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
 
           {/* Desktop Table View */}
           <div className="hidden lg:block">
-            <LeadsTable {...tableProps} />
+            <LeadsTable 
+              leads={filteredLeads}
+              onRowClick={handleRowClick}
+            />
           </div>
         </>
       )}
