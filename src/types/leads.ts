@@ -41,9 +41,6 @@ export interface LeadsStoreState {
   
   // Actions
   setLeads: (leads: Lead[]) => void;
-  
-  // Computed values
-  filteredAndSortedLeads: Lead[];
 }
 
 // ============================================================================

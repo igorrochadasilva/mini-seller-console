@@ -1,20 +1,12 @@
 import { create } from 'zustand';
 import { Lead, LeadsStoreState } from '../types/leads';
 
-export const useLeadsStore = create<LeadsStoreState>()((set, get) => ({
-  // Initial state
+export const useLeadsStore = create<LeadsStoreState>()((set) => ({
+  // Initial state - only data
   leads: [],
   
-  // Actions
+  // Actions - only data operations
   setLeads: (leads: Lead[]) => {
-    // Sort leads by score desc and update both properties
-    const sortedLeads = [...leads].sort((a, b) => b.score - a.score);
-    set({ 
-      leads, 
-      filteredAndSortedLeads: sortedLeads 
-    });
+    set({ leads });
   },
-  
-  // Computed values - as a regular property that gets updated
-  filteredAndSortedLeads: [],
 }));
