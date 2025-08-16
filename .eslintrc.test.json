@@ -1,0 +1,15 @@
+{
+  "extends": [".eslint.config.js"],
+  "env": {
+    "vitest/globals": true
+  },
+  "plugins": ["vitest"],
+  "rules": {
+    "vitest/expect-expect": "error",
+    "vitest/no-disabled-tests": "warn",
+    "vitest/no-focused-tests": "error",
+    "vitest/no-identical-title": "error",
+    "vitest/prefer-to-have-length": "warn",
+    "vitest/valid-expect": "error"
+  }
+}
