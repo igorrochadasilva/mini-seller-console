@@ -1,37 +1,74 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
 import { Lead, LeadDetailPanelProps } from '@/types';
+import { useLeadsStore } from '@/stores/leadsStore';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { X, Save, User, Building, Mail, TrendingUp, AlertCircle, Zap } from 'lucide-react';
 
-const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave, onConvertToOpportunity }) => {
-  const [email, setEmail] = useState(lead.email);
-  const [status, setStatus] = useState(lead.status);
-  const [error, setError] = useState('');
+// Zod schema for form validation
+const leadUpdateSchema = z.object({
+  email: z.string().email('Please enter a valid email address'),
+  status: z.enum(['New', 'Contacted', 'Qualified', 'Disqualified'], {
+    required_error: 'Please select a status',
+  }),
+});
 
-  const handleSave = () => {
-    if (!validateEmail(email)) {
-      setError('Invalid email format');
-      return;
+type LeadUpdateFormData = z.infer<typeof leadUpdateSchema>;
+
+const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave, onConvertToOpportunity }) => {
+  const { updateLead } = useLeadsStore();
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+    watch,
+  } = useForm<LeadUpdateFormData>({
+    resolver: zodResolver(leadUpdateSchema),
+    defaultValues: {
+      email: lead.email,
+      status: lead.status,
+    },
+  });
+
+  const watchedStatus = watch('status');
+
+  const onSubmit = async (data: LeadUpdateFormData) => {
+    try {
+      // Update lead in Zustand store
+      updateLead(lead.id, {
+        email: data.email,
+        status: data.status,
+      });
+
+      // Call parent onSave callback
+      onSave({ ...lead, email: data.email, status: data.status });
+      
+      // Show success toast
+      toast.success('Lead updated successfully!', {
+        description: `Updated ${lead.name}'s information`,
+      });
+      
+      // Close panel
+      onClose();
+    } catch (error) {
+      // Show error toast
+      toast.error('Failed to update lead', {
+        description: error instanceof Error ? error.message : 'An unexpected error occurred',
+      });
     }
-    onSave({ ...lead, email, status });
-    onClose();
   };
 
   const handleConvertToOpportunity = () => {
     onConvertToOpportunity(lead);
     onClose();
-  };
-
-  const validateEmail = (email: string) => {
-    const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return re.test(email);
-  };
-
-  const clearError = () => {
-    if (error) setError('');
   };
 
   return (
@@ -51,15 +88,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
-          {/* Error Message */}
-          {error && (
-            <div className="flex items-center gap-2 p-3 bg-red-900/30 border border-red-700/50 rounded-lg text-red-400">
-              <AlertCircle className="w-4 h-4" />
-              <span className="text-sm">{error}</span>
-            </div>
-          )}
-
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
           {/* Lead Info Display */}
           <div className="space-y-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50">
             <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Lead Information</h3>
@@ -110,14 +139,18 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
               <Input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  clearError();
-                }}
-                className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                {...register('email')}
+                className={`bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.email ? 'border-red-500 focus:ring-red-500' : ''
+                }`}
                 placeholder="Enter email address"
               />
+              {errors.email && (
+                <p className="text-red-400 text-sm flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             {/* Status Field */}
@@ -126,7 +159,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
                 <TrendingUp className="w-4 h-4" />
                 Status
               </Label>
-              <Select value={status} onValueChange={setStatus}>
+              <Select value={watchedStatus} onValueChange={(value) => setValue('status', value as any)}>
                 <SelectTrigger id="status" className="bg-gray-800/50 border-gray-600 text-white">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -137,12 +170,19 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
                   <SelectItem value="Disqualified" className="hover:bg-gray-700 text-white">Disqualified</SelectItem>
                 </SelectContent>
               </Select>
+              {errors.status && (
+                <p className="text-red-400 text-sm flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  {errors.status.message}
+                </p>
+              )}
             </div>
           </div>
 
           {/* Convert to Opportunity Button */}
           <div className="pt-4 border-t border-gray-700">
             <Button
+              type="button"
               variant="default"
               size="lg"
               onClick={handleConvertToOpportunity}
@@ -152,25 +192,27 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
               Convert to Opportunity
             </Button>
           </div>
-        </div>
 
-        {/* Footer Actions */}
-        <div className="flex gap-3 p-6 border-t border-gray-700 bg-gray-800/50">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            className="flex-1 bg-gray-700/50 border-gray-600 text-white hover:bg-gray-700 hover:border-gray-500"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSave}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            <Save className="w-4 h-4 mr-2" />
-            Save Changes
-          </Button>
-        </div>
+          {/* Footer Actions */}
+          <div className="flex gap-3 pt-6 border-t border-gray-700">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 bg-gray-700/50 border-gray-600 text-white hover:bg-gray-700 hover:border-gray-500"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              {isSubmitting ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );

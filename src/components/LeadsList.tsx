@@ -28,7 +28,8 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   };
 
   const handleSave = (updatedLead: Lead) => {
-    // For now, just close the panel
+    // The lead is already updated in Zustand via the LeadDetailPanel
+    // We just need to close the panel
     setSelectedLead(null);
   };
 

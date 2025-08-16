@@ -9,4 +9,13 @@ export const useLeadsStore = create<LeadsStoreState>()((set) => ({
   setLeads: (leads: Lead[]) => {
     set({ leads });
   },
+
+  // Update individual lead
+  updateLead: (leadId: string, updates: Partial<Lead>) => {
+    set((state) => ({
+      leads: state.leads.map(lead => 
+        lead.id === leadId ? { ...lead, ...updates } : lead
+      )
+    }));
+  },
 }));

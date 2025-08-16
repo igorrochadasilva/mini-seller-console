@@ -59,6 +59,7 @@ export interface LeadsStoreState {
   
   // Actions
   setLeads: (leads: Lead[]) => void;
+  updateLead: (leadId: string, updates: Partial<Lead>) => void;
 }
 
 // ============================================================================
