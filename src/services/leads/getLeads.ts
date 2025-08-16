@@ -1,15 +1,15 @@
-import { Lead } from '@/types';
+import { Lead, LeadStatus } from '@/types';
+import leadsData from '@/leads.json';
 
 export const getLeads = async (): Promise<Lead[]> => {
-  await new Promise(resolve => setTimeout(resolve, 500));
+  // Simular delay de rede para experiência realista
+  await new Promise(resolve => setTimeout(resolve, 300));
   
-  const response = await fetch('http://localhost:3000/leads');
+  // Mapear dados e converter status para enum
+  const leads = leadsData.leads.map(lead => ({
+    ...lead,
+    status: lead.status as LeadStatus
+  }));
   
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  
-  const data = await response.json();
-  
-  return data;
+  return leads;
 };
