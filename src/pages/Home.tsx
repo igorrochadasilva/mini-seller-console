@@ -13,7 +13,7 @@ function Home() {
       <TypographyH1>Mini Seller Console</TypographyH1>
       
       {/* Tab Navigation */}
-      <div className="flex space-x-1 mb-6 p-1 bg-gray-800/50 rounded-lg border border-gray-700/50">
+      <div className="flex space-x-1 my-6 p-1 bg-gray-800/50 rounded-lg border border-gray-700/50">
         <Button
           variant={activeTab === 'leads' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('leads')}

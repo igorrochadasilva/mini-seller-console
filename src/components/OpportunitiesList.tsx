@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './ui/table';
 import { Opportunity } from '@/types';
 import { OpportunityStage } from '@/types/enums';
 import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
 import { Button } from './ui/button';
-import { Edit, Trash2, Plus } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 import EmptyState from './EmptyState';
+import EditOpportunityModal from './EditOpportunityModal';
 import { TypographyH2, TypographyP } from './ui/typograph';
 
 // ============================================================================
@@ -14,10 +16,21 @@ import { TypographyH2, TypographyP } from './ui/typograph';
 
 const OpportunitiesList: React.FC = () => {
   const { opportunities, deleteOpportunity } = useOpportunitiesStore();
+  const [editingOpportunity, setEditingOpportunity] = useState<Opportunity | null>(null);
+
+  const handleEdit = (opportunity: Opportunity) => {
+    setEditingOpportunity(opportunity);
+  };
 
   const handleDelete = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this opportunity?')) {
+    const opportunity = opportunities.find(opp => opp.id === id);
+    if (!opportunity) return;
+
+    if (window.confirm(`Are you sure you want to delete "${opportunity.name}"?`)) {
       deleteOpportunity(id);
+      toast.success('Opportunity deleted successfully!', {
+        description: `Deleted: ${opportunity.name}`,
+      });
     }
   };
 
@@ -115,10 +128,7 @@ const OpportunitiesList: React.FC = () => {
                     variant="ghost"
                     size="icon"
                     className="text-blue-400 hover:text-blue-300 hover:bg-blue-900/20"
-                    onClick={() => {
-                      // TODO: Implement edit functionality
-                      console.log('Edit opportunity:', opportunity.id);
-                    }}
+                    onClick={() => handleEdit(opportunity)}
                   >
                     <Edit className="w-4 h-4" />
                   </Button>
@@ -136,6 +146,14 @@ const OpportunitiesList: React.FC = () => {
           ))}
         </TableBody>
       </Table>
+
+      {/* Edit Opportunity Modal */}
+      {editingOpportunity && (
+        <EditOpportunityModal
+          opportunity={editingOpportunity}
+          onClose={() => setEditingOpportunity(null)}
+        />
+      )}
     </div>
   );
 };
