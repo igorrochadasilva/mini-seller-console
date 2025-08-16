@@ -9,17 +9,17 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...',
       case SpinnerSize.SM:
         return 'w-4 h-4';
       case SpinnerSize.LG:
-        return 'w-8 h-8';
+        return 'w-12 h-12';
       default:
-        return 'w-6 h-6';
+        return 'w-8 h-8';
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 space-y-4">
-      <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-blue-500 ${getSizeClasses()}`} />
+    <div className="flex flex-col items-center justify-center w-full h-full min-h-[400px] space-y-6">
+      <div className={`animate-spin rounded-full border-3 border-gray-300/30 border-t-blue-500 ${getSizeClasses()}`} />
       {message && (
-        <TypographyP className="text-gray-400 text-sm font-medium">{message}</TypographyP>
+        <TypographyP className="text-gray-400 text-lg font-medium">{message}</TypographyP>
       )}
     </div>
   );

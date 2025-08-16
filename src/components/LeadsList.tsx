@@ -54,7 +54,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   }
 
   return (
-    <div className={className || ''}>
+    <div className={className || 'space-y-4 sm:space-y-6'}>
       {/* Filters Component */}
       <LeadsFilters
         searchTerm={searchTerm}
@@ -72,58 +72,72 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
         statusFilter={statusFilter}
       />
 
-      {/* Table */}
+      {/* Responsive Table Container */}
       {filteredLeads.length === 0 ? (
         <EmptyState
           title="No leads match your filters"
           message="Try adjusting your search terms or status filter."
         />
       ) : (
-        <Table className="w-full bg-gray-900 text-white rounded-xl shadow-2xl overflow-hidden border border-gray-700/50">
-          <TableHeader>
-            <TableRow className="bg-gray-800/80 hover:bg-gray-800/80">
-              <TableHead className="p-4 border-b border-gray-700 bg-gray-800/80 text-lg font-semibold text-white">Name</TableHead>
-              <TableHead className="p-4 border-b border-gray-700 bg-gray-800/80 text-lg font-semibold text-white">Company</TableHead>
-              <TableHead className="p-4 border-b border-gray-700 bg-gray-800/80 text-lg font-semibold text-white">Email</TableHead>
-              <TableHead className="p-4 border-b border-gray-700 bg-gray-800/80 text-lg font-semibold text-white">Source</TableHead>
-              <TableHead className="p-4 border-b border-gray-700 bg-gray-800/80 text-lg font-semibold text-white">Score</TableHead>
-              <TableHead className="p-4 border-b border-gray-700 bg-gray-800/80 text-lg font-semibold text-white">Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredLeads.map((lead: Lead) => (
-              <TableRow
-                key={lead.id}
-                className="hover:bg-gray-800/60 cursor-pointer transition-colors duration-150 border-b border-gray-700/30"
-                onClick={() => handleRowClick(lead)}
-              >
-                <TableCell className="p-4 font-medium">{lead.name}</TableCell>
-                <TableCell className="p-4 text-gray-300">{lead.company}</TableCell>
-                <TableCell className="p-4 text-gray-300">{lead.email}</TableCell>
-                <TableCell className="p-4 text-gray-300">{lead.source}</TableCell>
-                <TableCell className="p-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                    lead.score >= 80 ? 'bg-green-900/30 text-green-400' :
-                    lead.score >= 60 ? 'bg-yellow-900/30 text-yellow-400' :
-                    'bg-red-900/30 text-red-400'
-                  }`}>
-                    {lead.score}
-                  </span>
-                </TableCell>
-                <TableCell className="p-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    lead.status === LeadStatus.NEW ? 'bg-blue-900/30 text-blue-400' :
-                    lead.status === LeadStatus.CONTACTED ? 'bg-yellow-900/30 text-yellow-400' :
-                    lead.status === LeadStatus.QUALIFIED ? 'bg-green-900/30 text-green-400' :
-                    'bg-red-900/30 text-red-400'
-                  }`}>
-                    {lead.status}
-                  </span>
-                </TableCell>
+        <div className="w-full overflow-hidden rounded-xl border border-gray-700/50 bg-gray-900 shadow-2xl">
+          <Table className="w-full min-w-[900px] text-white">
+            <TableHeader>
+              <TableRow className="bg-gray-800/80 hover:bg-gray-800/80">
+                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                  Name
+                </TableHead>
+                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                  Company
+                </TableHead>
+                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                  Email
+                </TableHead>
+                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                  Source
+                </TableHead>
+                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                  Score
+                </TableHead>
+                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                  Status
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {filteredLeads.map((lead: Lead) => (
+                <TableRow
+                  key={lead.id}
+                  className="hover:bg-gray-800/60 cursor-pointer transition-colors duration-150 border-b border-gray-700/30"
+                  onClick={() => handleRowClick(lead)}
+                >
+                  <TableCell className="p-3 sm:p-4 font-medium text-sm sm:text-base">{lead.name}</TableCell>
+                  <TableCell className="p-3 sm:p-4 text-gray-300 text-sm sm:text-base">{lead.company}</TableCell>
+                  <TableCell className="p-3 sm:p-4 text-gray-300 text-sm sm:text-base">{lead.email}</TableCell>
+                  <TableCell className="p-3 sm:p-4 text-gray-300 text-sm sm:text-base">{lead.source}</TableCell>
+                  <TableCell className="p-3 sm:p-4">
+                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
+                      lead.score >= 80 ? 'bg-green-900/30 text-green-400' :
+                      lead.score >= 60 ? 'bg-yellow-900/30 text-yellow-400' :
+                      'bg-red-900/30 text-red-400'
+                    }`}>
+                      {lead.score}
+                    </span>
+                  </TableCell>
+                  <TableCell className="p-3 sm:p-4">
+                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
+                      lead.status === LeadStatus.NEW ? 'bg-blue-900/30 text-blue-400' :
+                      lead.status === LeadStatus.CONTACTED ? 'bg-yellow-900/30 text-yellow-400' :
+                      lead.status === LeadStatus.QUALIFIED ? 'bg-green-900/30 text-green-400' :
+                      'bg-red-900/30 text-red-400'
+                    }`}>
+                      {lead.status}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
 
       {/* Lead Detail Panel */}

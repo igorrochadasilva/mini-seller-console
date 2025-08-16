@@ -4,10 +4,10 @@ import { TypographyH3, TypographyP } from './ui/typograph';
 
 const EmptyState: React.FC<EmptyStateProps> = ({ title, message }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-12 text-center">
-      <div className="w-16 h-16 bg-gray-800/50 rounded-full flex items-center justify-center mb-4">
+    <div className="flex flex-col items-center justify-center w-full h-full min-h-[400px] p-12 text-center">
+      <div className="w-20 h-20 bg-gray-800/50 rounded-full flex items-center justify-center mb-6">
         <svg
-          className="w-8 h-8 text-gray-400"
+          className="w-10 h-10 text-gray-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -21,8 +21,8 @@ const EmptyState: React.FC<EmptyStateProps> = ({ title, message }) => {
           />
         </svg>
       </div>
-      <TypographyH3 className="text-xl font-semibold text-white mb-2">{title}</TypographyH3>
-      <TypographyP className="text-gray-400 max-w-md">{message}</TypographyP>
+      <TypographyH3 className="text-2xl font-semibold text-white mb-3">{title}</TypographyH3>
+      <TypographyP className="text-gray-400 max-w-md text-lg">{message}</TypographyP>
     </div>
   );
 };
