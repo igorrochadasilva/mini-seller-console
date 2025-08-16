@@ -6,10 +6,10 @@ import { toast } from 'sonner';
 
 export const useLeadsQuery = (): UseLeadsQueryResult => {
   const { setLeads } = useLeadsStore();
-  
+
   const { isLoading, error } = useQuery({
     queryKey: ['leads'],
-    queryFn: () => 
+    queryFn: () =>
       getLeads()
         .then((result) => {
           setLeads(result);
@@ -22,6 +22,8 @@ export const useLeadsQuery = (): UseLeadsQueryResult => {
           });
           throw error;
         }),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 5 * 60 * 1000, // 5 minutes (formerly cacheTime)
   });
 
   return { isLoading, error };
