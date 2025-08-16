@@ -11,19 +11,19 @@ interface LeadsResultsCountProps {
 const LeadsResultsCount: React.FC<LeadsResultsCountProps> = ({ count, searchTerm, statusFilter }) => {
   const getMessage = () => {
     if (searchTerm && statusFilter !== 'all') {
-      return `Showing ${count} lead${count !== 1 ? 's' : ''} matching "${searchTerm}" with status "${statusFilter}"`;
+      return `${count} lead${count !== 1 ? 's' : ''} matching "${searchTerm}" with status "${statusFilter}"`;
     } else if (searchTerm) {
-      return `Showing ${count} lead${count !== 1 ? 's' : ''} matching "${searchTerm}"`;
+      return `${count} lead${count !== 1 ? 's' : ''} matching "${searchTerm}"`;
     } else if (statusFilter !== 'all') {
-      return `Showing ${count} lead${count !== 1 ? 's' : ''} with status "${statusFilter}"`;
+      return `${count} lead${count !== 1 ? 's' : ''} with status "${statusFilter}"`;
     } else {
-      return `Showing all ${count} lead${count !== 1 ? 's' : ''}`;
+      return `${count} lead${count !== 1 ? 's' : ''}`;
     }
   };
 
   return (
-    <div className="mb-4 sm:mb-6">
-      <TypographyP className="text-sm sm:text-base text-gray-400">
+    <div className="flex items-center">
+      <TypographyP className="text-sm text-gray-400 font-medium">
         {getMessage()}
       </TypographyP>
     </div>
