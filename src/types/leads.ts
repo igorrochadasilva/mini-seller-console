@@ -67,6 +67,27 @@ export interface LeadsListProps {
 }
 
 /**
+ * Props for the LeadsFilters component
+ */
+export interface LeadsFiltersProps {
+  searchTerm: string;
+  statusFilter: string;
+  scoreSortDirection: 'asc' | 'desc';
+  onSearchChange: (value: string) => void;
+  onStatusFilterChange: (value: string) => void;
+  onScoreSortToggle: () => void;
+}
+
+/**
+ * Props for the LeadsResultsCount component
+ */
+export interface LeadsResultsCountProps {
+  count: number;
+  searchTerm: string;
+  statusFilter: string;
+}
+
+/**
  * Props for the LeadDetailPanel component
  */
 export interface LeadDetailPanelProps {

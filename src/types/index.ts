@@ -26,6 +26,8 @@ export type {
 // Component props types
 export type {
   LeadsListProps,
+  LeadsFiltersProps,
+  LeadsResultsCountProps,
   LeadDetailPanelProps,
   LoadingSpinnerProps,
   EmptyStateProps,

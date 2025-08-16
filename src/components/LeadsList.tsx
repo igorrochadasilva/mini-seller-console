@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./ui/table";
-import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
 import { useLeadsFilters } from '@/hooks/leads/useLeadsFilters';
 import LeadDetailPanel from './LeadDetailPanel';
 import LoadingSpinner from './LoadingSpinner';
 import EmptyState from './EmptyState';
+import LeadsFilters from './LeadsFilters';
+import LeadsResultsCount from './LeadsResultsCount';
 import { Lead, LeadsListProps } from '@/types';
-import { ChevronUp, ChevronDown, Search, Filter, TrendingUp } from 'lucide-react';
 
-const LeadsList: React.FC<LeadsListProps> = () => {
+const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   const { isLoading, error } = useLeadsQuery();
   const {
     filteredLeads,
@@ -45,85 +44,23 @@ const LeadsList: React.FC<LeadsListProps> = () => {
   }
 
   return (
-    <div className="">
-      
-      <div className="mb-8 space-y-6">
-        
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <Input
-            type="text"
-            placeholder="Search leads by name or company..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full mt-4 pl-10 pr-4 py-3 border border-gray-600 rounded-xl bg-gray-800/50 text-white placeholder-gray-400 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70"
-          />
-        </div>
+    <div className={className || ''}>
+      {/* Filters Component */}
+      <LeadsFilters
+        searchTerm={searchTerm}
+        statusFilter={statusFilter}
+        scoreSortDirection={scoreSortDirection}
+        onSearchChange={setSearchTerm}
+        onStatusFilterChange={setStatusFilter}
+        onScoreSortToggle={toggleScoreSort}
+      />
 
-        
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-          {/* Status Filter */}
-          <div className="flex flex-col gap-2 min-w-[200px]">
-            <label className="text-gray-300 text-sm font-medium flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              Status Filter
-            </label>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full bg-gray-700/50 border-gray-600 text-white rounded-lg hover:bg-gray-700/70 transition-colors duration-200 focus:ring-2 focus:ring-blue-500">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-600">
-                <SelectItem value="all" className="hover:bg-gray-700 text-white">All Statuses</SelectItem>
-                <SelectItem value="New" className="hover:bg-gray-700 text-white">New</SelectItem>
-                <SelectItem value="Contacted" className="hover:bg-gray-700 text-white">Contacted</SelectItem>
-                <SelectItem value="Qualified" className="hover:bg-gray-700 text-white">Qualified</SelectItem>
-                <SelectItem value="Disqualified" className="hover:bg-gray-700 text-white">Disqualified</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Score Sort Toggle */}
-          <div className="flex flex-col gap-2">
-            <label className="text-gray-300 text-sm font-medium flex items-center gap-2">
-              <TrendingUp className="w-4 h-4" />
-              Score Sort
-            </label>
-            <button
-              onClick={toggleScoreSort}
-              className="flex items-center gap-3 px-4 py-2 bg-gray-700/50 hover:bg-gray-700/70 rounded-lg transition-all duration-200 text-white border border-gray-600 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-[140px] justify-center"
-            >
-              {scoreSortDirection === 'desc' ? (
-                <>
-                  <ChevronDown className="w-4 h-4 text-blue-400" />
-                  <span className="font-medium">High to Low</span>
-                </>
-              ) : (
-                <>
-                  <ChevronUp className="w-4 h-4 text-green-400" />
-                  <span className="font-medium">Low to High</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      
-      <div className="mb-6 p-4 bg-gray-800/30 rounded-lg border border-gray-700/50">
-        <div className="text-gray-300 font-medium">
-          Showing <span className="text-blue-400 font-semibold">{filteredLeads.length}</span> leads
-          {searchTerm && (
-            <span className="text-gray-400 ml-2">
-              for "<span className="text-gray-300">{searchTerm}</span>"
-            </span>
-          )}
-          {statusFilter !== 'all' && (
-            <span className="text-gray-400 ml-2">
-              with status "<span className="text-gray-300">{statusFilter}</span>"
-            </span>
-          )}
-        </div>
-      </div>
+      {/* Results Count Component */}
+      <LeadsResultsCount
+        count={filteredLeads.length}
+        searchTerm={searchTerm}
+        statusFilter={statusFilter}
+      />
 
       {/* Table */}
       {filteredLeads.length === 0 ? (
@@ -179,6 +116,7 @@ const LeadsList: React.FC<LeadsListProps> = () => {
         </Table>
       )}
 
+      {/* Lead Detail Panel */}
       {selectedLead && (
         <LeadDetailPanel
           lead={selectedLead}
