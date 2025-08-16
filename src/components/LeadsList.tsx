@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
 import { useLeadsFilters } from '@/hooks/leads/useLeadsFilters';
 import LeadDetailPanel from './LeadDetailPanel';
@@ -26,18 +26,35 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
-  const handleRowClick = (lead: Lead) => {
+  const handleRowClick = useCallback((lead: Lead) => {
     setSelectedLead(lead);
-  };
+  }, []);
 
-  const handleSave = (updatedLead: Lead) => {
+  const handleSave = useCallback((updatedLead: Lead) => {
     setSelectedLead(null);
-  };
+  }, []);
 
-  const handleConvertToOpportunity = (opportunity: Opportunity) => {
+  const handleConvertToOpportunity = useCallback((opportunity: Opportunity) => {
     console.log('Lead converted to opportunity:', opportunity);
     setSelectedLead(null);
-  };
+  }, []);
+
+  // Memoize the leads rendering to prevent unnecessary re-renders
+  const mobileLeadsCards = useMemo(() => 
+    filteredLeads.map((lead: Lead) => (
+      <LeadCard 
+        key={lead.id} 
+        lead={lead}
+        onClick={handleRowClick}
+      />
+    )), [filteredLeads, handleRowClick]
+  );
+
+  // Memoize the table props to prevent unnecessary re-renders
+  const tableProps = useMemo(() => ({
+    leads: filteredLeads,
+    onRowClick: handleRowClick
+  }), [filteredLeads, handleRowClick]);
 
   if (isLoading) return <LoadingSpinner message="Loading leads..." size={SpinnerSize.LG} />;
 
@@ -80,21 +97,12 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
         <>
           {/* Mobile Cards View */}
           <div className="lg:hidden space-y-3">
-            {filteredLeads.map((lead: Lead) => (
-              <LeadCard 
-                key={lead.id} 
-                lead={lead}
-                onClick={handleRowClick}
-              />
-            ))}
+            {mobileLeadsCards}
           </div>
 
           {/* Desktop Table View */}
           <div className="hidden lg:block">
-            <LeadsTable 
-              leads={filteredLeads}
-              onRowClick={handleRowClick}
-            />
+            <LeadsTable {...tableProps} />
           </div>
         </>
       )}

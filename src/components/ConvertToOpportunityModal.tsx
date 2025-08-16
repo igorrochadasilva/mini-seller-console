@@ -6,6 +6,7 @@ import { Lead, Opportunity } from '@/types';
 import { useOpportunitiesStore } from '@/stores/opportunitiesStore';
 import { opportunityCreateSchema, OpportunityCreateFormData } from '@/schemas/opportunities';
 import { OpportunityStage } from '@/types/enums';
+import { generateOpportunityId } from '@/lib/leadUtils';
 import ModalHeader from './ConvertToOpportunityModal/ModalHeader';
 import LeadInformation from './ConvertToOpportunityModal/LeadInformation';
 import OpportunityForm from './ConvertToOpportunityModal/OpportunityForm';
@@ -47,7 +48,7 @@ const ConvertToOpportunityModal: React.FC<ConvertToOpportunityModalProps> = ({
     try {
       // Create new opportunity
       const newOpportunity: Opportunity = {
-        id: `opp_${Date.now()}`, // Simple ID generation for demo
+        id: generateOpportunityId(),
         name: data.name,
         stage: data.stage,
         amount: data.amount,

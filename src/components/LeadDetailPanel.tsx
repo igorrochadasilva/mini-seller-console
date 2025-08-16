@@ -1,32 +1,25 @@
-import React, { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState, useCallback } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Lead, LeadDetailPanelProps, Opportunity } from '@/types';
 import { useLeadsStore } from '@/stores/leadsStore';
 import { Button } from './ui/button';
 import { X, Save, Zap } from 'lucide-react';
-import { leadUpdateSchema, LeadUpdateFormData } from '@/schemas/leads';
 import LeadInformation from './LeadDetailPanel/LeadInformation';
 import EditFields from './LeadDetailPanel/EditFields';
 import ConvertToOpportunityModal from './ConvertToOpportunityModal';
 import { TypographyH2 } from './ui/typograph';
+import { useLeadForm } from '@/hooks/useLeadForm';
 
 const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave, onConvertToOpportunity }) => {
   const { updateLead } = useLeadsStore();
   const [showConvertModal, setShowConvertModal] = useState(false);
   
-  const methods = useForm<LeadUpdateFormData>({
-    resolver: zodResolver(leadUpdateSchema),
-    defaultValues: {
-      email: lead.email,
-      status: lead.status,
-    },
-  });
+  const methods = useLeadForm(lead);
 
   const { handleSubmit, formState: { isSubmitting } } = methods;
 
-  const onSubmit = async (data: LeadUpdateFormData) => {
+  const onSubmit = useCallback(async (data: any) => {
     try {
       // Update lead in Zustand store
       updateLead(lead.id, {
@@ -50,13 +43,13 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
         description: error instanceof Error ? error.message : 'An unexpected error occurred',
       });
     }
-  };
+  }, [lead, updateLead, onSave, onClose]);
 
-  const handleConvertToOpportunity = () => {
+  const handleConvertToOpportunity = useCallback(() => {
     setShowConvertModal(true);
-  };
+  }, []);
 
-  const handleConversionSuccess = (opportunity: Opportunity) => {
+  const handleConversionSuccess = useCallback((opportunity: Opportunity) => {
     // Call parent callback
     onConvertToOpportunity(opportunity);
     
@@ -64,7 +57,7 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
     toast.success('Lead converted to opportunity!', {
       description: `Opportunity "${opportunity.name}" created successfully`,
     });
-  };
+  }, [onConvertToOpportunity]);
 
   return (
     <>
