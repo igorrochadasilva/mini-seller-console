@@ -11,7 +11,7 @@ interface ModalHeaderProps {
 
 const ModalHeader: React.FC<ModalHeaderProps> = ({ lead, onClose }) => {
   return (
-    <div className="flex items-center justify-between p-6 border-b border-gray-700 bg-gray-800/50 rounded-t-xl">
+    <div className="flex items-center justify-between p-6 bg-gray-800/50 rounded-t-xl">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-blue-600/20 rounded-lg">
           <Zap className="w-5 h-5 text-blue-400" />

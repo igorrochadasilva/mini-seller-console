@@ -77,23 +77,31 @@ const ConvertToOpportunityModal: React.FC<ConvertToOpportunityModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-900 w-full max-w-md rounded-xl shadow-2xl border border-gray-700">
-        {/* Header */}
+      <div className="bg-gray-900 w-full max-w-md max-h-[90vh] rounded-xl shadow-2xl border border-gray-700 flex flex-col">
+        {/* Header - Fixed */}
         <ModalHeader lead={lead} onClose={onClose} />
 
-        {/* Content */}
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
-            {/* Lead Information */}
-            <LeadInformation lead={lead} />
+        {/* Content - Scrollable */}
+        <div className="flex-1 overflow-y-auto">
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+              {/* Lead Information */}
+              <LeadInformation lead={lead} />
 
-            {/* Opportunity Form */}
-            <OpportunityForm />
+              {/* Opportunity Form */}
+              <OpportunityForm />
+            </form>
+          </FormProvider>
+        </div>
 
-            {/* Footer Actions */}
-            <ModalFooter isSubmitting={isSubmitting} onCancel={onClose} />
-          </form>
-        </FormProvider>
+        {/* Footer - Fixed */}
+        <div className="p-6 border-t border-gray-700 bg-gray-900 rounded-b-2xl">
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <ModalFooter isSubmitting={isSubmitting} onCancel={onClose} />
+            </form>
+          </FormProvider>
+        </div>
       </div>
     </div>
   );

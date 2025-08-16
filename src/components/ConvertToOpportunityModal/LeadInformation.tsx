@@ -10,10 +10,10 @@ interface LeadInformationProps {
 const LeadInformation: React.FC<LeadInformationProps> = ({ lead }) => {
   return (
     <div className="p-4 bg-gray-800/30 rounded-lg border border-gray-700/50">
-      <TypographyH3 className="text-sm font-medium text-gray-400 uppercase tracking-wide mb-3">
+      <TypographyH3 className="text-sm font-medium text-gray-400 uppercase tracking-wide mb-4">
         Converting Lead
       </TypographyH3>
-      <div className="space-y-2 text-sm">
+      <div className="space-y-3 text-sm">
         <div className="flex justify-between">
           <span className="text-gray-400">Name:</span>
           <TypographyP className="text-white font-medium">{lead.name}</TypographyP>

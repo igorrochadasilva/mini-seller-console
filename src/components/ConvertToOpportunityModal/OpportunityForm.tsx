@@ -18,7 +18,7 @@ const OpportunityForm: React.FC = () => {
   const watchedStage = watch('stage');
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <TypographyH3 className="text-sm font-medium text-gray-400 uppercase tracking-wide">
         Opportunity Details
       </TypographyH3>
@@ -98,7 +98,7 @@ const OpportunityForm: React.FC = () => {
 
       {/* Account Name Field */}
       <div className="space-y-2">
-        <Label htmlFor="accountName" className="text-gray-300 text-sm font-medium">
+        <Label htmlFor="name" className="text-gray-300 text-sm font-medium">
           Account Name
         </Label>
         <Input

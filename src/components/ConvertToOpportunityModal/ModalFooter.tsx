@@ -9,7 +9,7 @@ interface ModalFooterProps {
 
 const ModalFooter: React.FC<ModalFooterProps> = ({ isSubmitting, onCancel }) => {
   return (
-    <div className="flex gap-3 pt-6 border-t border-gray-700">
+    <div className="flex gap-3">
       <Button
         type="button"
         variant="outline"
