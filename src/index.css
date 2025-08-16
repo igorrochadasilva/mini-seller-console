@@ -85,29 +85,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"] {
-  @apply w-full p-3 mb-4 border border-gray-700 rounded-lg bg-gray-800 text-white shadow-sm transition-shadow duration-200 ease-in-out;
-}
-
-input[type="text"]:focus {
-  @apply outline-none ring-2 ring-offset-2 ring-gray-500;
-}
-
-.table {
-  @apply w-full mt-4 bg-gray-900 text-white rounded-lg shadow-lg;
-}
-
-.table th, .table td {
-  @apply p-4 border-b border-gray-700;
-}
-
-.table th {
-  @apply bg-gray-800;
-}
-
-.table tr:hover {
-  @apply bg-gray-800;
-}
+/* Removed table styles as they are now applied directly in the component */
 
 h1 {
   font-size: 3.2em;

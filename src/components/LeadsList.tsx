@@ -37,7 +37,7 @@ function LeadsList() {
         placeholder="Search by name or company"
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
-        className="mt-4"
+        className="w-full p-3 mb-4 border border-gray-700 rounded-lg bg-gray-800 text-white shadow-sm transition-shadow duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-4"
       />
       <Select
         value={statusFilter}
@@ -48,26 +48,26 @@ function LeadsList() {
           <SelectItem value="Contacted">Contacted</SelectItem>
         </SelectContent>
       </Select>
-      <Table>
+      <Table className="w-full mt-4 bg-gray-900 text-white rounded-lg shadow-lg">
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Source</TableHead>
-            <TableHead>Score</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="p-4 border-b border-gray-700 bg-gray-700 text-lg font-semibold text-white">Name</TableHead>
+            <TableHead className="p-4 border-b border-gray-700 bg-gray-700 text-lg font-semibold text-white">Company</TableHead>
+            <TableHead className="p-4 border-b border-gray-700 bg-gray-700 text-lg font-semibold text-white">Email</TableHead>
+            <TableHead className="p-4 border-b border-gray-700 bg-gray-700 text-lg font-semibold text-white">Source</TableHead>
+            <TableHead className="p-4 border-b border-gray-700 bg-gray-700 text-lg font-semibold text-white">Score</TableHead>
+            <TableHead className="p-4 border-b border-gray-700 bg-gray-700 text-lg font-semibold text-white">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredLeads.map(lead => (
-            <TableRow key={lead.id}>
-              <TableCell>{lead.name}</TableCell>
-              <TableCell>{lead.company}</TableCell>
-              <TableCell>{lead.email}</TableCell>
-              <TableCell>{lead.source}</TableCell>
-              <TableCell>{lead.score}</TableCell>
-              <TableCell>{lead.status}</TableCell>
+            <TableRow key={lead.id} className="hover:bg-gray-800">
+              <TableCell className="p-4 border-b border-gray-700">{lead.name}</TableCell>
+              <TableCell className="p-4 border-b border-gray-700">{lead.company}</TableCell>
+              <TableCell className="p-4 border-b border-gray-700">{lead.email}</TableCell>
+              <TableCell className="p-4 border-b border-gray-700">{lead.source}</TableCell>
+              <TableCell className="p-4 border-b border-gray-700">{lead.score}</TableCell>
+              <TableCell className="p-4 border-b border-gray-700">{lead.status}</TableCell>
             </TableRow>
           ))}
         </TableBody>
