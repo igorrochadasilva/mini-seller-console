@@ -1,71 +1,76 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useLeadsStore } from '@/stores/leadsStore';
 import { LeadStatus, ScoreSortDirection, UseLeadsFilters } from '@/types';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+
+// ============================================================================
+// OPTIMIZED LEADS FILTERS HOOK WITH LOCAL STORAGE
+// ============================================================================
 
 export const useLeadsFilters = (): UseLeadsFilters => {
   const { leads } = useLeadsStore();
 
-  // Filter state
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<LeadStatus | 'all'>('all');
-  const [scoreSortDirection, setScoreSortDirection] = useState<ScoreSortDirection>(ScoreSortDirection.DESC);
+  // Filter state with localStorage persistence
+  const [searchTerm, setSearchTerm] = useLocalStorage<string>('leads-search-term', '');
+  const [statusFilter, setStatusFilter] = useLocalStorage<LeadStatus | 'all'>('leads-status-filter', 'all');
+  const [scoreSortDirection, setScoreSortDirection] = useLocalStorage<ScoreSortDirection>('leads-score-sort', ScoreSortDirection.DESC);
 
-  // Computed filtered leads
+  // Computed filtered leads - optimized with single pass filtering
   const filteredLeads = useMemo(() => {
-    let filtered = leads;
+    if (!leads.length) return [];
 
-    // Apply search filter
-    if (searchTerm.trim()) {
-      const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (lead) =>
+    // Single pass filtering for better performance
+    const filtered = leads.filter((lead) => {
+      // Apply search filter
+      if (searchTerm.trim()) {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = 
           lead.name.toLowerCase().includes(searchLower) ||
-          lead.company.toLowerCase().includes(searchLower)
-      );
-    }
-
-    // Apply status filter
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter((lead) => lead.status === statusFilter);
-    }
-
-    // Apply score sorting
-    filtered = [...filtered].sort((a, b) => {
-      if (scoreSortDirection === ScoreSortDirection.ASC) {
-        return a.score - b.score;
-      } else {
-        return b.score - a.score;
+          lead.company.toLowerCase().includes(searchLower);
+        if (!matchesSearch) return false;
       }
+
+      // Apply status filter
+      if (statusFilter !== 'all' && lead.status !== statusFilter) {
+        return false;
+      }
+
+      return true;
     });
 
-    return filtered;
+    // Apply sorting
+    return filtered.sort((a, b) => {
+      return scoreSortDirection === ScoreSortDirection.ASC 
+        ? a.score - b.score 
+        : b.score - a.score;
+    });
   }, [leads, searchTerm, statusFilter, scoreSortDirection]);
 
-  // Actions
-  const toggleScoreSort = useCallback(() => {
-    setScoreSortDirection((prev) =>
+  // Simplified actions - no need for useCallback here
+  const toggleScoreSort = () => {
+    setScoreSortDirection(prev => 
       prev === ScoreSortDirection.ASC ? ScoreSortDirection.DESC : ScoreSortDirection.ASC
     );
-  }, []);
+  };
 
-  const resetFilters = useCallback(() => {
+  const resetFilters = () => {
     setSearchTerm('');
     setStatusFilter('all');
     setScoreSortDirection(ScoreSortDirection.DESC);
-  }, []);
+  };
 
   return {
     // State
     searchTerm,
     statusFilter,
     scoreSortDirection,
-    
+
     // Actions
     setSearchTerm,
     setStatusFilter,
     toggleScoreSort,
     resetFilters,
-    
+
     // Computed
     filteredLeads,
   };
