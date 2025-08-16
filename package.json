@@ -15,7 +15,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "pre-push": "npm run test:run && npm run build",
+    "pre-commit": "npx lint-staged",
+    "check-all": "npm run lint && npm run format:check && npm run test:run && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
