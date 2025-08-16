@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Lead, LeadsStoreState } from '../types/leads';
+import { Lead, LeadsStoreState, LeadUpdateData } from '@/types';
 
 export const useLeadsStore = create<LeadsStoreState>()((set) => ({
   // Initial state - only data
@@ -11,7 +11,7 @@ export const useLeadsStore = create<LeadsStoreState>()((set) => ({
   },
 
   // Update individual lead
-  updateLead: (leadId: string, updates: Partial<Lead>) => {
+  updateLead: (leadId: string, updates: LeadUpdateData) => {
     set((state) => ({
       leads: state.leads.map(lead => 
         lead.id === leadId ? { ...lead, ...updates } : lead

@@ -8,6 +8,7 @@ import EmptyState from './EmptyState';
 import LeadsFilters from './LeadsFilters';
 import LeadsResultsCount from './LeadsResultsCount';
 import { Lead, LeadsListProps } from '@/types';
+import { LeadStatus, SpinnerSize } from '@/types/enums';
 
 const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
   const { isLoading, error } = useLeadsQuery();
@@ -40,7 +41,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
     setSelectedLead(null);
   };
 
-  if (isLoading) return <LoadingSpinner message="Loading leads..." size="lg" />;
+  if (isLoading) return <LoadingSpinner message="Loading leads..." size={SpinnerSize.LG} />;
 
   if (error) {
     return (
@@ -90,9 +91,9 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
           </TableHeader>
           <TableBody>
             {filteredLeads.map((lead: Lead) => (
-              <TableRow 
-                key={lead.id} 
-                className="hover:bg-gray-800/60 cursor-pointer transition-colors duration-150 border-b border-gray-700/30" 
+              <TableRow
+                key={lead.id}
+                className="hover:bg-gray-800/60 cursor-pointer transition-colors duration-150 border-b border-gray-700/30"
                 onClick={() => handleRowClick(lead)}
               >
                 <TableCell className="p-4 font-medium">{lead.name}</TableCell>
@@ -110,9 +111,9 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
                 </TableCell>
                 <TableCell className="p-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    lead.status === 'New' ? 'bg-blue-900/30 text-blue-400' :
-                    lead.status === 'Contacted' ? 'bg-yellow-900/30 text-yellow-400' :
-                    lead.status === 'Qualified' ? 'bg-green-900/30 text-green-400' :
+                    lead.status === LeadStatus.NEW ? 'bg-blue-900/30 text-blue-400' :
+                    lead.status === LeadStatus.CONTACTED ? 'bg-yellow-900/30 text-yellow-400' :
+                    lead.status === LeadStatus.QUALIFIED ? 'bg-green-900/30 text-green-400' :
                     'bg-red-900/30 text-red-400'
                   }`}>
                     {lead.status}

@@ -1,4 +1,6 @@
-export const getLeads = async () => {
+import { Lead } from '@/types';
+
+export const getLeads = async (): Promise<Lead[]> => {
   await new Promise(resolve => setTimeout(resolve, 500));
   
   const response = await fetch('http://localhost:3000/leads');

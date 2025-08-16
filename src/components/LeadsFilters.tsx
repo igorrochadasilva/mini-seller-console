@@ -1,18 +1,10 @@
 import React from 'react';
-import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Search, Filter, TrendingUp, ChevronUp, ChevronDown } from 'lucide-react';
-
-interface LeadsFiltersProps {
-  searchTerm: string;
-  statusFilter: string;
-  scoreSortDirection: 'asc' | 'desc';
-  onSearchChange: (value: string) => void;
-  onStatusFilterChange: (value: string) => void;
-  onScoreSortToggle: () => void;
-}
+import { Input } from './ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Button } from './ui/button';
+import { Search, Filter, TrendingUp, TrendingDown } from 'lucide-react';
+import { LeadsFiltersProps } from '@/types';
+import { LeadStatus, ScoreSortDirection } from '@/types/enums';
 
 const LeadsFilters: React.FC<LeadsFiltersProps> = ({
   searchTerm,
@@ -20,70 +12,53 @@ const LeadsFilters: React.FC<LeadsFiltersProps> = ({
   scoreSortDirection,
   onSearchChange,
   onStatusFilterChange,
-  onScoreSortToggle
+  onScoreSortToggle,
 }) => {
   return (
-    <div className="mb-8 space-y-6">
-      {/* Search Input with Icon */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+    <div className="flex flex-col sm:flex-row gap-4 mb-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700/50">
+      {/* Search Input */}
+      <div className="flex-1 relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
         <Input
           type="text"
-          placeholder="Search leads by name or company..."
+          placeholder="Search by name or company..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full mt-4 pl-10 pr-4 py-3 border border-gray-600 rounded-xl bg-gray-800/50 text-white placeholder-gray-400 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:bg-gray-800/70"
+          className="pl-10 bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
-      {/* Filters Row */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-        {/* Status Filter */}
-        <div className="flex flex-col gap-2 min-w-[200px]">
-          <Label htmlFor="status-filter" className="text-gray-300 text-sm font-medium flex items-center gap-2">
-            <Filter className="w-4 h-4" />
-            Status Filter
-          </Label>
-          <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-            <SelectTrigger id="status-filter" className="w-full bg-gray-700/50 border-gray-600 text-white rounded-lg hover:bg-gray-700/70 transition-colors duration-200 focus:ring-2 focus:ring-blue-500">
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-800 border-gray-600">
-              <SelectItem value="all" className="hover:bg-gray-700 text-white">All Statuses</SelectItem>
-              <SelectItem value="New" className="hover:bg-gray-700 text-white">New</SelectItem>
-              <SelectItem value="Contacted" className="hover:bg-gray-700 text-white">Contacted</SelectItem>
-              <SelectItem value="Qualified" className="hover:bg-gray-700 text-white">Qualified</SelectItem>
-              <SelectItem value="Disqualified" className="hover:bg-gray-700 text-white">Disqualified</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+      {/* Status Filter */}
+      <div className="flex-shrink-0">
+        <Select value={statusFilter} onValueChange={onStatusFilterChange}>
+          <SelectTrigger className="w-40 bg-gray-800/50 border-gray-600 text-white">
+            <Filter className="w-4 h-4 mr-2" />
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 border-gray-600">
+            <SelectItem value="all" className="hover:bg-gray-700 text-white">All Statuses</SelectItem>
+            <SelectItem value={LeadStatus.NEW} className="hover:bg-gray-700 text-white">{LeadStatus.NEW}</SelectItem>
+            <SelectItem value={LeadStatus.CONTACTED} className="hover:bg-gray-700 text-white">{LeadStatus.CONTACTED}</SelectItem>
+            <SelectItem value={LeadStatus.QUALIFIED} className="hover:bg-gray-700 text-white">{LeadStatus.QUALIFIED}</SelectItem>
+            <SelectItem value={LeadStatus.DISQUALIFIED} className="hover:bg-gray-700 text-white">{LeadStatus.DISQUALIFIED}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-        {/* Score Sort Toggle */}
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="score-sort" className="text-gray-300 text-sm font-medium flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" />
-            Score Sort
-          </Label>
-          <Button
-            id="score-sort"
-            variant="outline"
-            size="lg"
-            onClick={onScoreSortToggle}
-            className="flex items-center gap-3 px-4 py-2 bg-gray-700/50 hover:bg-gray-700/70 border-gray-600 hover:border-gray-500 text-white min-w-[140px] justify-center h-9"
-          >
-            {scoreSortDirection === 'desc' ? (
-              <>
-                <ChevronDown className="w-4 h-4 text-blue-400" />
-                <span className="font-medium">High to Low</span>
-              </>
-            ) : (
-              <>
-                <ChevronUp className="w-4 h-4 text-green-400" />
-                <span className="font-medium">Low to High</span>
-              </>
-            )}
-          </Button>
-        </div>
+      {/* Score Sort Toggle */}
+      <div className="flex-shrink-0">
+        <Button
+          variant="outline"
+          onClick={onScoreSortToggle}
+          className="h-10 bg-gray-800/50 border-gray-600 text-white hover:bg-gray-700 hover:border-gray-500"
+        >
+          {scoreSortDirection === ScoreSortDirection.DESC ? (
+            <TrendingDown className="w-4 h-4 mr-2" />
+          ) : (
+            <TrendingUp className="w-4 h-4 mr-2" />
+          )}
+          Score {scoreSortDirection === ScoreSortDirection.DESC ? 'High to Low' : 'Low to High'}
+        </Button>
       </div>
     </div>
   );

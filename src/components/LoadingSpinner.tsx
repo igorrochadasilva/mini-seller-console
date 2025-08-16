@@ -1,20 +1,25 @@
 import React from 'react';
 import { LoadingSpinnerProps } from '@/types';
+import { SpinnerSize } from '@/types/enums';
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  message = "Loading...", 
-  size = 'md' 
-}) => {
-  const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12'
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...', size = SpinnerSize.MD }) => {
+  const getSizeClasses = () => {
+    switch (size) {
+      case SpinnerSize.SM:
+        return 'w-4 h-4';
+      case SpinnerSize.LG:
+        return 'w-8 h-8';
+      default:
+        return 'w-6 h-6';
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center p-8 space-y-4">
-      <div className={`${sizeClasses[size]} animate-spin rounded-full border-4 border-gray-300 border-t-blue-600`}></div>
-      <div className="text-lg text-gray-400">{message}</div>
+      <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-blue-500 ${getSizeClasses()}`} />
+      {message && (
+        <p className="text-gray-400 text-sm font-medium">{message}</p>
+      )}
     </div>
   );
 };

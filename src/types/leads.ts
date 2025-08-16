@@ -1,9 +1,11 @@
+import { LeadStatus, OpportunityStage, ScoreSortDirection, SpinnerSize } from './enums';
+
 // ============================================================================
 // LEAD TYPES
 // ============================================================================
 
 /**
- * Base interface for a Lead entity
+ * Lead entity interface
  */
 export interface Lead {
   id: string;
@@ -12,38 +14,26 @@ export interface Lead {
   email: string;
   source: string;
   score: number;
-  status: string;
+  status: LeadStatus;
 }
 
-// ============================================================================
-// OPPORTUNITY TYPES
-// ============================================================================
-
 /**
- * Base interface for an Opportunity entity
+ * Opportunity entity interface
  */
 export interface Opportunity {
   id: string;
   name: string;
-  stage: 'Prospecting' | 'Qualification' | 'Proposal' | 'Negotiation' | 'Closed Won' | 'Closed Lost';
+  stage: OpportunityStage;
   amount?: number;
   accountName: string;
-  leadId: string; // Reference to the original lead
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-// ============================================================================
-// API TYPES
-// ============================================================================
-
 /**
- * Error response from API
+ * Lead update data interface
  */
-export interface ApiError {
-  message: string;
-  status?: number;
-  details?: string;
+export interface LeadUpdateData {
+  email?: string;
+  status?: LeadStatus;
 }
 
 // ============================================================================
@@ -51,15 +41,42 @@ export interface ApiError {
 // ============================================================================
 
 /**
- * State interface for the leads store
+ * Zustand store state interface
  */
 export interface LeadsStoreState {
-  // Data
   leads: Lead[];
-  
-  // Actions
   setLeads: (leads: Lead[]) => void;
-  updateLead: (leadId: string, updates: Partial<Lead>) => void;
+  updateLead: (leadId: string, updates: LeadUpdateData) => void;
+}
+
+// ============================================================================
+// FILTER TYPES
+// ============================================================================
+
+/**
+ * Filter state interface
+ */
+export interface LeadsFilterState {
+  searchTerm: string;
+  statusFilter: LeadStatus | 'all';
+  scoreSortDirection: ScoreSortDirection;
+}
+
+/**
+ * Filter actions interface
+ */
+export interface LeadsFilterActions {
+  setSearchTerm: (term: string) => void;
+  setStatusFilter: (status: LeadStatus | 'all') => void;
+  toggleScoreSort: () => void;
+  resetFilters: () => void;
+}
+
+/**
+ * Combined filter hook interface
+ */
+export interface UseLeadsFilters extends LeadsFilterState, LeadsFilterActions {
+  filteredLeads: Lead[];
 }
 
 // ============================================================================
@@ -67,47 +84,26 @@ export interface LeadsStoreState {
 // ============================================================================
 
 /**
- * Return type for the useLeadsQuery hook
+ * React Query result interface
  */
 export interface UseLeadsQueryResult {
   isLoading: boolean;
-  error: ApiError | null;
+  error: Error | null;
 }
 
 // ============================================================================
-// COMPONENT PROPS TYPES
+// COMPONENT PROP TYPES
 // ============================================================================
 
 /**
- * Props for the LeadsList component
+ * LeadsList component props
  */
 export interface LeadsListProps {
   className?: string;
 }
 
 /**
- * Props for the LeadsFilters component
- */
-export interface LeadsFiltersProps {
-  searchTerm: string;
-  statusFilter: string;
-  scoreSortDirection: 'asc' | 'desc';
-  onSearchChange: (value: string) => void;
-  onStatusFilterChange: (value: string) => void;
-  onScoreSortToggle: () => void;
-}
-
-/**
- * Props for the LeadsResultsCount component
- */
-export interface LeadsResultsCountProps {
-  count: number;
-  searchTerm: string;
-  statusFilter: string;
-}
-
-/**
- * Props for the LeadDetailPanel component
+ * LeadDetailPanel component props
  */
 export interface LeadDetailPanelProps {
   lead: Lead;
@@ -117,18 +113,38 @@ export interface LeadDetailPanelProps {
 }
 
 /**
- * Props for the LoadingSpinner component
+ * LeadsFilters component props
  */
-export interface LoadingSpinnerProps {
-  message?: string;
-  size?: 'sm' | 'md' | 'lg';
+export interface LeadsFiltersProps {
+  searchTerm: string;
+  statusFilter: LeadStatus | 'all';
+  scoreSortDirection: ScoreSortDirection;
+  onSearchChange: (term: string) => void;
+  onStatusFilterChange: (status: LeadStatus | 'all') => void;
+  onScoreSortToggle: () => void;
 }
 
 /**
- * Props for the EmptyState component
+ * LeadsResultsCount component props
+ */
+export interface LeadsResultsCountProps {
+  count: number;
+  searchTerm: string;
+  statusFilter: LeadStatus | 'all';
+}
+
+/**
+ * LoadingSpinner component props
+ */
+export interface LoadingSpinnerProps {
+  message?: string;
+  size?: SpinnerSize;
+}
+
+/**
+ * EmptyState component props
  */
 export interface EmptyStateProps {
-  title?: string;
-  message?: string;
-  icon?: React.ReactNode;
+  title: string;
+  message: string;
 }

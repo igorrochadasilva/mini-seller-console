@@ -1,81 +1,72 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useLeadsStore } from '@/stores/leadsStore';
-import { Lead } from '@/types';
+import { LeadStatus, ScoreSortDirection, UseLeadsFilters } from '@/types';
 
-export const useLeadsFilters = () => {
+export const useLeadsFilters = (): UseLeadsFilters => {
   const { leads } = useLeadsStore();
-  
-  // Local filter state
+
+  // Filter state
   const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [scoreSortDirection, setScoreSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [statusFilter, setStatusFilter] = useState<LeadStatus | 'all'>('all');
+  const [scoreSortDirection, setScoreSortDirection] = useState<ScoreSortDirection>(ScoreSortDirection.DESC);
 
-  // Debounce search term to avoid excessive re-renders
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
-
-  // Computed filtered and sorted leads
+  // Computed filtered leads
   const filteredLeads = useMemo(() => {
-    if (leads.length === 0) {
-      return [];
+    let filtered = leads;
+
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (lead) =>
+          lead.name.toLowerCase().includes(searchLower) ||
+          lead.company.toLowerCase().includes(searchLower)
+      );
     }
 
-    // Apply filters
-    let filtered = leads.filter(lead => {
-      // Search filter (name or company) - using debounced term
-      const matchesSearch = !debouncedSearchTerm || 
-        lead.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        lead.company.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-      
-      // Status filter
-      const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
-      
-      return matchesSearch && matchesStatus;
-    });
-    
-    // Sort by score
-    const sorted = filtered.sort((a, b) => {
-      if (scoreSortDirection === 'desc') {
-        return b.score - a.score;
-      } else {
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter((lead) => lead.status === statusFilter);
+    }
+
+    // Apply score sorting
+    filtered = [...filtered].sort((a, b) => {
+      if (scoreSortDirection === ScoreSortDirection.ASC) {
         return a.score - b.score;
+      } else {
+        return b.score - a.score;
       }
     });
-    
-    return sorted;
-  }, [leads, debouncedSearchTerm, statusFilter, scoreSortDirection]);
 
-  // Memoized actions for better performance
-  const setSearchTermCallback = useCallback((term: string) => {
-    setSearchTerm(term);
-  }, []);
+    return filtered;
+  }, [leads, searchTerm, statusFilter, scoreSortDirection]);
 
-  const setStatusFilterCallback = useCallback((filter: string) => {
-    setStatusFilter(filter);
-  }, []);
-
+  // Actions
   const toggleScoreSort = useCallback(() => {
-    setScoreSortDirection(prev => prev === 'desc' ? 'asc' : 'desc');
+    setScoreSortDirection((prev) =>
+      prev === ScoreSortDirection.ASC ? ScoreSortDirection.DESC : ScoreSortDirection.ASC
+    );
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setScoreSortDirection(ScoreSortDirection.DESC);
   }, []);
 
   return {
-    // Data
-    filteredLeads,
-    
-    // Filter state
+    // State
     searchTerm,
     statusFilter,
     scoreSortDirection,
     
     // Actions
-    setSearchTerm: setSearchTermCallback,
-    setStatusFilter: setStatusFilterCallback,
+    setSearchTerm,
+    setStatusFilter,
     toggleScoreSort,
+    resetFilters,
+    
+    // Computed
+    filteredLeads,
   };
 };
