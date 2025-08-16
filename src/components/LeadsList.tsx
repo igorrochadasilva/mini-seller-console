@@ -79,26 +79,26 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
           message="Try adjusting your search terms or status filter."
         />
       ) : (
-        <div className="w-full overflow-hidden rounded-xl border border-gray-700/50 bg-gray-900 shadow-2xl">
-          <Table className="w-full min-w-[900px] text-white">
+        <div className="w-[320px] xs:w-[375px] sm:w-[640px] md:w-[768px] lg:w-[900px] xl:w-[1000px] overflow-hidden rounded-xl border border-gray-700/50 bg-gray-900 shadow-2xl">
+          <Table className="w-full text-white">
             <TableHeader>
               <TableRow className="bg-gray-800/80 hover:bg-gray-800/80">
-                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                <TableHead className="p-1.5 sm:p-2 md:p-3 lg:p-4 border-b border-gray-700 bg-gray-800/80 text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-white">
                   Name
                 </TableHead>
-                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                <TableHead className="p-1.5 sm:p-2 md:p-3 lg:p-4 border-b border-gray-700 bg-gray-800/80 text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-white">
                   Company
                 </TableHead>
-                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                <TableHead className="p-1.5 sm:p-2 md:p-3 lg:p-4 border-b border-gray-700 bg-gray-800/80 text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-white">
                   Email
                 </TableHead>
-                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                <TableHead className="p-1.5 sm:p-2 md:p-3 lg:p-4 border-b border-gray-700 bg-gray-800/80 text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-white">
                   Source
                 </TableHead>
-                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                <TableHead className="p-1.5 sm:p-2 md:p-3 lg:p-4 border-b border-gray-700 bg-gray-800/80 text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-white">
                   Score
                 </TableHead>
-                <TableHead className="p-3 sm:p-4 border-b border-gray-700 bg-gray-800/80 text-base sm:text-lg font-semibold text-white">
+                <TableHead className="p-1.5 sm:p-2 md:p-3 lg:p-4 border-b border-gray-700 bg-gray-800/80 text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-white">
                   Status
                 </TableHead>
               </TableRow>
@@ -110,12 +110,12 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
                   className="hover:bg-gray-800/60 cursor-pointer transition-colors duration-150 border-b border-gray-700/30"
                   onClick={() => handleRowClick(lead)}
                 >
-                  <TableCell className="p-3 sm:p-4 font-medium text-sm sm:text-base">{lead.name}</TableCell>
-                  <TableCell className="p-3 sm:p-4 text-gray-300 text-sm sm:text-base">{lead.company}</TableCell>
-                  <TableCell className="p-3 sm:p-4 text-gray-300 text-sm sm:text-base">{lead.email}</TableCell>
-                  <TableCell className="p-3 sm:p-4 text-gray-300 text-sm sm:text-base">{lead.source}</TableCell>
-                  <TableCell className="p-3 sm:p-4">
-                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
+                  <TableCell className="p-1.5 sm:p-2 md:p-3 lg:p-4 font-medium text-xs sm:text-sm md:text-base">{lead.name}</TableCell>
+                  <TableCell className="p-1.5 sm:p-2 md:p-3 lg:p-4 text-gray-300 text-xs sm:text-sm md:text-base">{lead.company}</TableCell>
+                  <TableCell className="p-1.5 sm:p-2 md:p-3 lg:p-4 text-gray-300 text-xs sm:text-sm md:text-base">{lead.email}</TableCell>
+                  <TableCell className="p-1.5 sm:p-2 md:p-3 lg:p-4 text-gray-300 text-xs sm:text-sm md:text-base">{lead.source}</TableCell>
+                  <TableCell className="p-1.5 sm:p-2 md:p-3 lg:p-4">
+                    <span className={`px-1.5 sm:px-2 py-1 rounded-full text-xs font-semibold ${
                       lead.score >= 80 ? 'bg-green-900/30 text-green-400' :
                       lead.score >= 60 ? 'bg-yellow-900/30 text-yellow-400' :
                       'bg-red-900/30 text-red-400'
@@ -123,8 +123,8 @@ const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
                       {lead.score}
                     </span>
                   </TableCell>
-                  <TableCell className="p-3 sm:p-4">
-                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
+                  <TableCell className="p-1.5 sm:p-2 md:p-3 lg:p-4">
+                    <span className={`px-1.5 sm:px-2 py-1 rounded-full text-xs font-semibold ${
                       lead.status === LeadStatus.NEW ? 'bg-blue-900/30 text-blue-400' :
                       lead.status === LeadStatus.CONTACTED ? 'bg-yellow-900/30 text-yellow-400' :
                       lead.status === LeadStatus.QUALIFIED ? 'bg-green-900/30 text-green-400' :
