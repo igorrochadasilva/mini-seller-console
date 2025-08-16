@@ -1,64 +1,49 @@
 import React, { useState } from 'react';
-import { Input } from "./ui/input";
-import { Select, SelectItem, SelectContent } from "./ui/select";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./ui/table";
 import { useLeadsQuery } from '@/hooks/leads/useLeadsQuery';
+import { useLeadsStore } from '@/stores/leadsStore';
 import LeadDetailPanel from './LeadDetailPanel';
+import LoadingSpinner from './LoadingSpinner';
+import EmptyState from './EmptyState';
+import { Lead, LeadsListProps } from '../types';
 
-interface Lead {
-  id: string;
-  name: string;
-  company: string;
-  email: string;
-  source: string;
-  score: number;
-  status: string;
-}
-
-function LeadsList() {
-  const { data: leads = [], isLoading, error } = useLeadsQuery();
+const LeadsList: React.FC<LeadsListProps> = ({ className }) => {
+  const { isLoading, error } = useLeadsQuery();
+  const { filteredAndSortedLeads } = useLeadsStore();
+  
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
-
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
-
-  const filteredLeads = leads.filter(lead =>
-    (lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (statusFilter ? lead.status === statusFilter : true)
-  );
 
   const handleRowClick = (lead: Lead) => {
     setSelectedLead(lead);
   };
 
   const handleSave = (updatedLead: Lead) => {
-    // Update the lead in the list (this would typically involve an API call)
-    const updatedLeads = leads.map(lead => lead.id === updatedLead.id ? updatedLead : lead);
+    // For now, just close the panel
     setSelectedLead(null);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading leads</div>;
+  if (isLoading) return <LoadingSpinner message="Loading leads..." size="lg" />
+  
+  if (error) {
+    return (
+      <EmptyState 
+        title="Error loading leads"
+        message="There was a problem loading the leads. Please try again later."
+      />
+    );
+  }
+
+  if (filteredAndSortedLeads.length === 0) {
+    return (
+      <EmptyState 
+        title="No leads available"
+        message="There are no leads to display at the moment."
+      />
+    );
+  }
 
   return (
-    <div className="leads-list">
-      <Input
-        type="text"
-        placeholder="Search by name or company"
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-        className="w-full p-3 mb-4 border border-gray-700 rounded-lg bg-gray-800 text-white shadow-sm transition-shadow duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-4"
-      />
-      <Select
-        value={statusFilter}
-        onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setStatusFilter(e.target.value)}
-      >
-        <SelectContent>
-          <SelectItem value="New">New</SelectItem>
-          <SelectItem value="Contacted">Contacted</SelectItem>
-        </SelectContent>
-      </Select>
+    <div className={`leads-list ${className || ''}`}>
       <Table className="w-full mt-4 bg-gray-900 text-white rounded-lg shadow-lg">
         <TableHeader>
           <TableRow>
@@ -71,7 +56,7 @@ function LeadsList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredLeads.map(lead => (
+          {filteredAndSortedLeads.map((lead: Lead) => (
             <TableRow key={lead.id} className="hover:bg-gray-800 cursor-pointer" onClick={() => handleRowClick(lead)}>
               <TableCell className="p-4 border-b border-gray-700">{lead.name}</TableCell>
               <TableCell className="p-4 border-b border-gray-700">{lead.company}</TableCell>
@@ -83,9 +68,16 @@ function LeadsList() {
           ))}
         </TableBody>
       </Table>
-      {selectedLead && <LeadDetailPanel lead={selectedLead} onClose={() => setSelectedLead(null)} onSave={handleSave} />}
+      
+      {selectedLead && (
+        <LeadDetailPanel 
+          lead={selectedLead} 
+          onClose={() => setSelectedLead(null)} 
+          onSave={handleSave} 
+        />
+      )}
     </div>
   );
-}
+};
 
 export default LeadsList;

@@ -1,18 +1,5 @@
 import React, { useState } from 'react';
-
-interface LeadDetailPanelProps {
-  lead: {
-    id: string;
-    name: string;
-    company: string;
-    email: string;
-    source: string;
-    score: number;
-    status: string;
-  };
-  onClose: () => void;
-  onSave: (updatedLead: any) => void;
-}
+import { Lead, LeadDetailPanelProps } from '@/types';
 
 const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave }) => {
   const [email, setEmail] = useState(lead.email);
@@ -51,11 +38,13 @@ const LeadDetailPanel: React.FC<LeadDetailPanelProps> = ({ lead, onClose, onSave
           <label className="block text-sm font-medium text-gray-700">Status</label>
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => setStatus(e.target.value as any)}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="New">New</option>
             <option value="Contacted">Contacted</option>
+            <option value="Qualified">Qualified</option>
+            <option value="Disqualified">Disqualified</option>
           </select>
         </div>
         <div className="flex justify-end">
