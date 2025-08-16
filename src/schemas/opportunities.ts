@@ -11,9 +11,7 @@ import { OpportunityStage } from '@/types/enums';
  */
 export const opportunityCreateSchema = z.object({
   name: z.string().min(1, 'Opportunity name is required'),
-  stage: z.nativeEnum(OpportunityStage, {
-    required_error: 'Please select a stage',
-  }),
+  stage: z.nativeEnum(OpportunityStage),
   amount: z.number().min(0, 'Amount must be positive').optional(),
   accountName: z.string().min(1, 'Account name is required'),
 });

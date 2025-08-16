@@ -1,2 +1,2 @@
-export { default as LeadCard } from './LeadCard';
-export { default as LeadsTable } from './LeadsTable';
+export { LeadCard } from './LeadCard';
+export { LeadsTable } from './LeadsTable';

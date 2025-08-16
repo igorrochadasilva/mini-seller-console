@@ -3,10 +3,10 @@
 // ============================================================================
 
 // Main components
-export { default as LeadsList } from './LeadsList';
-export { default as OpportunitiesList } from './OpportunitiesList';
-export { default as ConvertToOpportunityModal } from './ConvertToOpportunityModal';
-export { default as EditOpportunityModal } from './EditOpportunityModal';
+export { LeadsList } from './LeadsList';
+export { OpportunitiesList } from './OpportunitiesList';
+export { ConvertToOpportunityModal } from './ConvertToOpportunityModal';
+export { EditOpportunityModal } from './EditOpportunityModal';
 
 // Lead Detail Panel components
 export * from './LeadDetailPanel';
@@ -18,7 +18,7 @@ export * from './ConvertToOpportunityModal';
 export * from './EditOpportunityModal';
 
 // UI components
-export { default as LoadingSpinner } from './LoadingSpinner';
-export { default as EmptyState } from './EmptyState';
-export { default as LeadsFilters } from './LeadsFilters';
-export { default as LeadsResultsCount } from './LeadsResultsCount';
+export { LoadingSpinner } from './LoadingSpinner';
+export { EmptyState } from './EmptyState';
+export { LeadsFilters } from './LeadsFilters';
+export { LeadsResultsCount } from './LeadsResultsCount';
